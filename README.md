@@ -1,2 +1,2 @@
 # ChatsApp
-A Chat web app
+A Chat web app.
