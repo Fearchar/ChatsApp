@@ -51,9 +51,9 @@ function deleteRoute(req, res, next) {
     .then(user => {
       if (!user) return res.sendStatus(404)
       return user.remove()
-        .then(() => res.sendStatus(204))
-        .catch(next)
     })
+    .then(() => res.sendStatus(204))
+    .catch(next)
 }
 
 module.exports = { registerRoute, loginRoute, showRoute, indexRoute, updateRoute, deleteRoute }
