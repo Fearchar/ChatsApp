@@ -4,7 +4,6 @@ mongoose.plugin(require('mongoose-unique-validator'), {
   message: 'Please choose another {PATH}'
 })
 
-
 const { port, dbURI } = require('./config/environment')
 const bodyParser = require('body-parser')
 const router = require('./config/routes')
