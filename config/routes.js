@@ -1,13 +1,13 @@
 const router = require('express').Router()
 //!!! const secureRoute = require('../lib/secureRoute')
-const userController = require('../controlllers/userController')
+const userController = require('../controllers/userController')
 
-router.post('/register', userController.register)
-router.post('/login', userController.login)
-router.get('/users', userController.index)
+router.post('/register', userController.registerRoute)
+router.post('/login', userController.loginRoute)
+router.get('/users', userController.indexRoute)
 router.route('/users/:id')
-  .get(userController.show)
-  .put(userController.update)
-  .delete(userController.delete)
+  .get(userController.showRoute)
+  .put(userController.updateRoute)
+  .delete(userController.deleteRoute)
 
 module.exports = router

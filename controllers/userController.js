@@ -1,13 +1,14 @@
 const User = require('../models/User')
-const jwt = require('jasonwebtoken')
+const jwt = require('jsonwebtoken')
 const secret = require('../config/environment')
 
-function register(req, res, next) {
+function registerRoute(req, res, next) {
   User.create(req.body)
+    .then(() => res.json({ message: 'Registration successful' }))
     .catch(next)
 }
 
-function login(req, res, next) {
+function loginRoute(req, res, next) {
   User.findOne({email: req.body.email})
     .then(user => {
       if (!user || !user.validatePassword(req.body.password)) {
@@ -19,7 +20,7 @@ function login(req, res, next) {
     .catch(next)
 }
 
-function show(req, res, next) {
+function showRoute(req, res, next) {
   User.findById(req.params.id)
     .then(user => {
       if(!user) return res.sendStatus(404)
@@ -28,13 +29,13 @@ function show(req, res, next) {
     .catch(next)
 }
 
-function index(req, res, next) {
+function indexRoute(req, res, next) {
   User.find() // !!! alter to User.find(req.query) ??
     .then(users => res.json(users))
     .catch(next)
 }
 
-function update(req, res, next) {
+function updateRoute(req, res, next) {
   User.findById(req.params.id)
     .then(user => {
       if (!user) return res.sendStatus(404)
@@ -45,14 +46,14 @@ function update(req, res, next) {
     .catch(next)
 }
 
-function delete(req, res, next) {
+function deleteRoute(req, res, next) {
   User.findById(req.params.id)
     .then(user => {
       if (!user) return res.sendStatus(404)
       return user.remove()
-      .then(() => res.sendStatus(204))
-      .catch(next)
+        .then(() => res.sendStatus(204))
+        .catch(next)
     })
 }
 
-module.exports = { register, login, show, index, update, delete }
+module.exports = { registerRoute, loginRoute, showRoute, indexRoute, updateRoute, deleteRoute }

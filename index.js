@@ -1,5 +1,9 @@
 const express = require('express')
 const mongoose = require('mongoose')
+mongoose.plugin(require('mongoose-unique-validator'), {
+  message: 'Please choose another {PATH}'
+})
+
 
 const { port, dbURI } = require('./config/environment')
 const bodyParser = require('body-parser')
