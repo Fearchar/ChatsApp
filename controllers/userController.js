@@ -1,6 +1,6 @@
 const User = require('../models/User')
 const jwt = require('jsonwebtoken')
-const secret = require('../config/environment')
+const { secret } = require('../config/environment')
 
 function registerRoute(req, res, next) {
   User.create(req.body)
@@ -9,13 +9,13 @@ function registerRoute(req, res, next) {
 }
 
 function loginRoute(req, res, next) {
-  User.findOne({email: req.body.email})
+  User.findOne({ email: req.body.email })
     .then(user => {
       if (!user || !user.validatePassword(req.body.password)) {
         return res.sendStatus(401)
       }
       const token = jwt.sign({ sub: user._id }, secret, { expiresIn: '6h' })
-      res.json({ token, message: `Welcome back to the conversation ${user.name}`})
+      res.json({ token, message: `Welcome back to the conversation ${user.name}` })
     })
     .catch(next)
 }
