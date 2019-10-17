@@ -1,8 +1,13 @@
 const router = require('express').Router()
 //!!! const secureRoute = require('../lib/secureRoute')
+const userController = require('../controlllers/userController')
 
-//!!! router.route('/happenings/')
-//   .get(happeningsController.index)
-//   .post(secureRoute, happeningsController.create)
+router.post('/register', userController.register)
+router.post('/login', userController.login)
+router.get('/users', userController.index)
+router.route('/users/:id')
+  .get(userController.show)
+  .put(userController.update)
+  .delete(userController.delete)
 
 module.exports = router
