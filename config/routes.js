@@ -8,7 +8,7 @@ router.post('/login', userController.loginRoute)
 router.get('/users', secureRoute, userController.indexRoute)
 router.route('/users/:id')
   .get(userController.showRoute)
-  .put(userController.updateRoute)
+  .put(secureRoute, userController.updateRoute)
   .delete(userController.deleteRoute)
 
 module.exports = router

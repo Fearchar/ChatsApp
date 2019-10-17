@@ -39,7 +39,7 @@ function updateRoute(req, res, next) {
   User.findById(req.params.id)
     .then(user => {
       if (!user) return res.sendStatus(404)
-      user.set(req.body)
+      return user.set(req.body)
     })
     .then(user => user.save())
     .then(user => res.json(user))
