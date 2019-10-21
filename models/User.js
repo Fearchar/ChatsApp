@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, unique: true, required: 'Please provide a {PATH}' },
   password: { type: String, required: 'Please provide a {PATH}' },
   imageUrl: { type: String, required: false },
-  contacts: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
+  contacts: { type: [ mongoose.Schema.ObjectId ], ref: 'User' },
   id: false
 }, {
   toJSON: {
@@ -33,14 +33,17 @@ userSchema.virtual('passwordConfirmation')
   })
 
 userSchema.pre('validate', function checkPasswords(next){
-  if(this.isModified('password') && this._passwordConfirmation !== this.password){
+  if (
+    this.isModified('password') &&
+    this._passwordConfirmation !== this.password
+  ){
     this.invalidate('passwordConfirmation', 'Passwords do not match')
   }
   next()
 })
 
 userSchema.pre('save', function hashPassword(next){
-  if(this.isModified('password')) {
+  if (this.isModified('password')) {
     this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(8))
   }
   next()

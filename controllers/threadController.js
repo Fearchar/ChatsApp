@@ -28,14 +28,14 @@ function deleteRoute(req, res, next) {
     .catch(next)
 }
 
-function addUserRoute(req, res, next) {
+function addUserRoute(req, res, next, userType) {
   Thread.findById(req.params.threadId)
     .then(thread => {
       if (!thread) return res.sendStatus(404)
       User.findById(req.params.userId)
         .then(user => {
           if (!user) return res.sendStatus(404)
-          thread.users.addToSet(user._id)
+          thread[userType + 's'].addToSet(user._id)
           return thread.save()
         })
         .then(thread => res.json(thread))
@@ -59,6 +59,7 @@ module.exports = {
   show: showRoute,
   update: updateRoute,
   delete: deleteRoute,
-  addUser: addUserRoute,
-  removeUser: removeUserRoute
+  addUser: (req, res, next) => addUserRoute(req, res, next, 'user'),
+  removeUser: removeUserRoute,
+  addAdmin: (req, res, next) => addUserRoute(req, res, next, 'admin')
 }

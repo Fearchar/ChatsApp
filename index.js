@@ -1,7 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 mongoose.plugin(require('mongoose-unique-validator'), {
-  message: 'Please choose another {PATH}'
+  message: 'The chosen {PATH} is not unique. Please provide another'
 })
 const morgan = require('morgan')
 
