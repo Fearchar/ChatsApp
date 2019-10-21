@@ -13,12 +13,6 @@ function showRoute(req, res, next) {
     .catch(next)
 }
 
-function indexRoute(req, res, next) {
-  Thread.find(req.body.user.id)
-    .then(threads => res.json(threads))
-    .catch(next)
-}
-
 function updateRoute(req, res, next) {
   Thread.findById(req.params.id)
     .then(thread => !thread ? res.sendStatus(404) : thread.set(req.body))
@@ -49,11 +43,22 @@ function addUserRoute(req, res, next) {
     })
 }
 
+function removeUserRoute(req, res, next) {
+  Thread.findById(req.params.threadId)
+    .then(thread => {
+      if (!thread) return res.sendStatus(404)
+      thread.users.pull(req.params.userId)
+      return thread.save()
+    })
+    .then(thread => res.json(thread))
+    .catch(next)
+}
+
 module.exports = {
   create: createRoute,
   show: showRoute,
-  index: indexRoute,
   update: updateRoute,
   delete: deleteRoute,
-  addUser: addUserRoute
+  addUser: addUserRoute,
+  removeUser: removeUserRoute
 }

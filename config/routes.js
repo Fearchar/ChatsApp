@@ -17,6 +17,7 @@ router.route('/threads/:id')
   .get( threadController.show)
   .put( threadController.update)
   .delete(threadController.delete)
-router.put('/threads/:threadId/users/:userId/', threadController.addUser)
+router.put('/threads/:threadId/users/:userId/add', threadController.addUser)
+router.put('/threads/:threadId/users/:userId/remove', threadController.removeUser)
 
 module.exports = router
