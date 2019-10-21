@@ -7,7 +7,15 @@ const threadSchema = new mongoose.Schema({
   ] },
   nameSpace: { type: String, unique: true, required: true },
   admins: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
-  messages: [{ type: mongoose.Schema.ObjectId, ref: 'Message' }]
+  messages: [{ type: mongoose.Schema.ObjectId, ref: 'Message' }],
+  lastMessage: { type: String },
+  lastMessageDate: { type: Date }
+})
+
+threadSchema.virtual('users', {
+  localField: '_id',
+  foreignField: 'threads',
+  ref: 'User'
 })
 
 module.exports = mongoose.model('Thread', threadSchema)

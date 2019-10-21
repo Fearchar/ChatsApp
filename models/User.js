@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: 'Please provide a {PATH}' },
   imageUrl: { type: String, required: false },
   contacts: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
-  threads: [{ type: mongoose.Schema.ObjectId, ref: 'Thread' }]
+  threads: [{ type: mongoose.Schema.ObjectId, ref: 'Thread' }],
+  id: false
 }, {
   toJSON: {
     virtuals: true,
