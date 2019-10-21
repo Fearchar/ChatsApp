@@ -1,4 +1,5 @@
 const Thread = require('../models/Thread')
+const User = require('../models/User')
 
 function createRoute(req, res, next) {
   Thread.create(req.body)
@@ -33,10 +34,26 @@ function deleteRoute(req, res, next) {
     .catch(next)
 }
 
+function addUserRoute(req, res, next) {
+  Thread.findById(req.params.threadId)
+    .then(thread => {
+      if (!thread) return res.sendStatus(404)
+      User.findById(req.params.userId)
+        .then(user => {
+          if (!user) return res.sendStatus(404)
+          thread.users.addToSet(user._id)
+          return thread.save()
+        })
+        .then(thread => res.json(thread))
+        .catch(next)
+    })
+}
+
 module.exports = {
   create: createRoute,
   show: showRoute,
   index: indexRoute,
   update: updateRoute,
-  delete: deleteRoute
+  delete: deleteRoute,
+  addUser: addUserRoute
 }

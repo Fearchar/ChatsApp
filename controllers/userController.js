@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken')
 
 const User = require('../models/User')
-const Thread = require('../models/Thread')
 const { secret } = require('../config/environment')
 
 function registerRoute(req, res, next) {
@@ -63,21 +62,6 @@ function showThreadIndexRoute(req, res, next) {
     .catch(next)
 }
 
-function joinThreadRoute(req, res, next) {
-  User.findById(req.params.userId)
-    .then(user => {
-      if (!user) return res.sendStatus(404)
-      Thread.findById(req.params.threadId)
-        .then(thread => {
-          if (!thread) return res.sendStatus(404)
-          user.threads.addToSet(thread._id)
-          return user.save()
-        })
-        .then(user => res.json(user))
-        .catch(next)
-    })
-}
-
 module.exports = {
   register: registerRoute,
   login: loginRoute,
@@ -85,6 +69,5 @@ module.exports = {
   index: indexRoute,
   update: updateRoute,
   delete: deleteRoute,
-  showThreadIndex: showThreadIndexRoute,
-  joinThread: joinThreadRoute
+  showThreadIndex: showThreadIndexRoute
 }

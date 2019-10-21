@@ -11,12 +11,12 @@ router.route('/users/:id')
   .put( userController.update)
   .delete( userController.delete)
 router.get('/users/:id/threads', userController.showThreadIndex)
-router.put('/users/:userId/threads/:threadId', userController.joinThread)
 
 router.post('/threads', threadController.create)
 router.route('/threads/:id')
   .get( threadController.show)
   .put( threadController.update)
   .delete(threadController.delete)
+router.put('/threads/:threadId/users/:userId/', threadController.addUser)
 
 module.exports = router

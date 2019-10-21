@@ -10,7 +10,6 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: 'Please provide a {PATH}' },
   imageUrl: { type: String, required: false },
   contacts: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
-  threads: [{ type: mongoose.Schema.ObjectId, ref: 'Thread' }],
   id: false
 }, {
   toJSON: {
@@ -20,6 +19,12 @@ const userSchema = new mongoose.Schema({
       return json
     }
   }
+})
+
+userSchema.virtual('threads', {
+  localField: '_id',
+  foreignField: 'users',
+  ref: 'Thread'
 })
 
 userSchema.virtual('passwordConfirmation')
