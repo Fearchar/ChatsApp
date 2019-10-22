@@ -21,9 +21,9 @@ const userSchema = new mongoose.Schema({
   }
 })
 
-userSchema.virtual('threads', {
+userSchema.virtual('threadsAdmin', {
   localField: '_id',
-  foreignField: 'users',
+  foreignField: 'admins',
   ref: 'Thread'
 })
 

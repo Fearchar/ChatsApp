@@ -7,15 +7,15 @@ const threadSchema = new mongoose.Schema({
   ] },
   nameSpace: { type: String, unique: true, required: true },
   admins: { type: [ mongoose.Schema.ObjectId ], ref: 'User'},
-  users: { type: [ mongoose.Schema.ObjectId ], ref: 'User'},
+  participants: { type: [ mongoose.Schema.ObjectId ], ref: 'User'},
   messages: { type: [ mongoose.Schema.ObjectId ], ref: 'Message' },
   lastMessage: { type: String },
   lastMessageDate: { type: Date }
 })
 
 threadSchema.pre('validate', function checkUsers(next){
-  if(this.admins.length === 0 || this.users.length === 0){
-    this.invalidate('users', 'Does not contain users and/or admins')
+  if(this.admins.length === 0) {
+    this.invalidate('admins', 'Requires at least one admin')
   }
   next()
 })
