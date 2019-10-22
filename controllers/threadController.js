@@ -10,6 +10,7 @@ function createRoute(req, res, next) {
 function showRoute(req, res, next) {
   Thread.findById(req.params.id)
     .then(thread => !thread ? res.sendStatus(404) : res.json(thread))
+    .then(thread => Thread.populate(thread, { modal: 'Message', path: 'messages', select: 'content' }))
     .catch(next)
 }
 
