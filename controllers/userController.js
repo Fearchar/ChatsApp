@@ -23,7 +23,7 @@ function loginRoute(req, res, next) {
 }
 
 function showRoute(req, res, next) {
-  User.findById(req.params.id)
+  User.findOne({_id: req.params.id}).select('+email')
     .then(user => !user ? res.sendStatus(404) : res.json(user))
     .catch(next)
 }
@@ -49,14 +49,22 @@ function deleteRoute(req, res, next) {
     .catch(next)
 }
 
+// !!! De-populate users from response thread
 function showThreadIndexRoute(req, res, next) {
   User.findById(req.params.id)
     .then(user => !user ? res.sendStatus(404) : User.populate(
       user,
       {
-        path: 'threadsAdmin',
+        path: 'participantThreads',
         modal: 'Thread',
-        select: 'name lastMessage lastMessageDate'
+        select: 'name admins participants lastMessage lastMessageDate'
+      }))
+    .then(user => User.populate(
+      user,
+      {
+        path: 'adminThreads',
+        modal: 'Thread',
+        select: 'name admins participants lastMessage lastMessageDate'
       }))
     .then(user => res.json(user))
     .catch(next)

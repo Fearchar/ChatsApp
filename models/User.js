@@ -6,24 +6,22 @@ const userSchema = new mongoose.Schema({
     40,
     'Thread names can be no longer that 40 characters. Please choose a shorter thread name.'
   ] },
-  email: { type: String, unique: true, required: 'Please provide a {PATH}' },
-  password: { type: String, required: 'Please provide a {PATH}' },
+  email: { type: String, unique: true, required: 'Please provide a {PATH}', select: false },
+  password: { type: String, required: 'Please provide a {PATH}', select: false },
   imageUrl: { type: String, required: false },
   contacts: { type: [ mongoose.Schema.ObjectId ], ref: 'User' },
   id: false
-}, {
-  toJSON: {
-    virtuals: true,
-    transform(doc, json) {
-      delete json.password
-      return json
-    }
-  }
-})
+}, { toJSON: { virtuals: true } })
 
-userSchema.virtual('threadsAdmin', {
+userSchema.virtual('adminThreads', {
   localField: '_id',
   foreignField: 'admins',
+  ref: 'Thread'
+})
+
+userSchema.virtual('participantThreads', {
+  localField: '_id',
+  foreignField: 'participants',
   ref: 'Thread'
 })
 
