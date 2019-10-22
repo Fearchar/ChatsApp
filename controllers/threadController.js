@@ -28,14 +28,16 @@ function deleteRoute(req, res, next) {
     .catch(next)
 }
 
-function addUserRoute(req, res, next, userType) {
+function changeUserStatusRoutes(req, res, next, changeTo = 'participant') {
+  const changeFrom = changeTo === 'admin' ? 'participant' : 'admin'
   Thread.findById(req.params.threadId)
     .then(thread => {
       if (!thread) return res.sendStatus(404)
       User.findById(req.params.userId)
         .then(user => {
           if (!user) return res.sendStatus(404)
-          thread[userType + 's'].addToSet(user._id)
+          thread[`${changeFrom}s`].pull(user._id)
+          thread[`${changeTo}s`].addToSet(user._id)
           return thread.save()
         })
         .then(thread => res.json(thread))
@@ -43,11 +45,11 @@ function addUserRoute(req, res, next, userType) {
     })
 }
 
-function removeUserRoute(req, res, next) {
+function removeUserRoutes(req, res, next, userType) {
   Thread.findById(req.params.threadId)
     .then(thread => {
       if (!thread) return res.sendStatus(404)
-      thread.users.pull(req.params.userId)
+      thread[`${userType}s`].pull(req.params.userId)
       return thread.save()
     })
     .then(thread => res.json(thread))
@@ -59,7 +61,9 @@ module.exports = {
   show: showRoute,
   update: updateRoute,
   delete: deleteRoute,
-  addUser: (req, res, next) => addUserRoute(req, res, next, 'user'),
-  removeUser: removeUserRoute,
-  addAdmin: (req, res, next) => addUserRoute(req, res, next, 'admin')
+  addUser: changeUserStatusRoutes,
+  removeUser: (req, res, next) => removeUserRoutes(req, res, next, 'participant'),
+  promoteUser: (req, res, next) => changeUserStatusRoutes(req, res, next, 'admin'),
+  removeAdmin: (req, res, next) => removeUserRoutes(req, res, next, 'admin'),
+  demoteAdmin: changeUserStatusRoutes
 }

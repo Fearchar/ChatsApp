@@ -14,8 +14,8 @@ const threadSchema = new mongoose.Schema({
 })
 
 threadSchema.pre('validate', function checkUsers(next){
-  if(this.admins.length === 0 || this.users.length === 0){
-    this.invalidate('users', 'Does not contain users and/or admins')
+  if(this.admins.length === 0) {
+    this.invalidate('thread', 'Requires at least one admin.')
   }
   next()
 })

@@ -19,6 +19,8 @@ router.route('/threads/:id')
   .delete(threadController.delete)
 router.put('/threads/:threadId/users/:userId/add', threadController.addUser)
 router.put('/threads/:threadId/users/:userId/remove', threadController.removeUser)
-router.put('/threads/:threadId/admins/:userId/add', threadController.addAdmin)
+router.put('/threads/:threadId/users/:userId/promote', threadController.promoteUser)
+router.put('/threads/:threadId/admins/:userId/remove', threadController.removeAdmin)
+router.put('/threads/:threadId/admins/:userId/demote', threadController.demoteAdmin)
 
 module.exports = router
