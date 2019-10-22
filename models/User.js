@@ -9,12 +9,19 @@ const userSchema = new mongoose.Schema({
   email: { type: String, unique: true, required: 'Please provide a {PATH}', select: false },
   password: { type: String, required: 'Please provide a {PATH}', select: false },
   imageUrl: { type: String, required: false },
-  contacts: { type: [ mongoose.Schema.ObjectId ], ref: 'User' }
+  contacts: { type: [ mongoose.Schema.ObjectId ], ref: 'User' },
+  id: false
+}, { toJSON: { virtuals: true } })
+
+userSchema.virtual('adminThreads', {
+  localField: '_id',
+  foreignField: 'admins',
+  ref: 'Thread'
 })
 
-userSchema.virtual('threads', {
+userSchema.virtual('participantThreads', {
   localField: '_id',
-  foreignField: 'users',
+  foreignField: 'participants',
   ref: 'Thread'
 })
 

@@ -7,7 +7,7 @@ const threadSchema = new mongoose.Schema({
   ] },
   nameSpace: { type: String, unique: true, required: true },
   admins: { type: [ mongoose.Schema.ObjectId ], ref: 'User'},
-  users: { type: [ mongoose.Schema.ObjectId ], ref: 'User'},
+  participants: { type: [ mongoose.Schema.ObjectId ], ref: 'User'},
   messages: { type: [ mongoose.Schema.ObjectId ], ref: 'Message' },
   lastMessage: { type: String },
   lastMessageDate: { type: Date }

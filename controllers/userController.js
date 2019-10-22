@@ -55,16 +55,16 @@ function showThreadIndexRoute(req, res, next) {
     .then(user => !user ? res.sendStatus(404) : User.populate(
       user,
       {
-        path: 'threadsParticipant',
+        path: 'participantThreads',
         modal: 'Thread',
-        select: 'name lastMessage lastMessageDate'
+        select: 'name admins participants lastMessage lastMessageDate'
       }))
     .then(user => User.populate(
       user,
       {
-        path: 'threadsAdmin',
+        path: 'adminThreads',
         modal: 'Thread',
-        select: 'name lastMessage lastMessageDate'
+        select: 'name admins participants lastMessage lastMessageDate'
       }))
     .then(user => res.json(user))
     .catch(next)
