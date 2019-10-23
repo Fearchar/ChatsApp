@@ -1,4 +1,4 @@
-// const Thread = require('../models/Thread')
+const Thread = require('../models/Thread')
 const Message = require('../models/Message')
 
 // function createRoute(req, res, next) {
@@ -10,7 +10,9 @@ const Message = require('../models/Message')
 
 function createRoute(req, res, next) {
   req.body.user = req.currentUser
-  Message.create(req.body)
+  req.body.thread = req.params.threadId
+  Thread.findById(req.params.threadId)
+    .then(thread => !thread ? res.sendStatus(404) : Message.create(req.body))
     .then(message => res.json(message))
     .catch(next)
 }
