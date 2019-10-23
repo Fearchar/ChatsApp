@@ -1,7 +1,6 @@
 const router = require('express').Router()
 const userController = require('../controllers/userController')
 const threadController = require('../controllers/threadController')
-const messageController = require('../controllers/messageController')
 const secureRoute = require('../lib/secureRoute')
 
 router.post('/register', userController.register)
@@ -24,6 +23,6 @@ router.put('/threads/:threadId/users/:userId/promote', threadController.promoteU
 router.put('/threads/:threadId/admins/:userId/remove', threadController.removeAdmin)
 router.put('/threads/:threadId/admins/:userId/demote', threadController.demoteAdmin)
 
-router.post('/threads/:threadId/messages', secureRoute, messageController.create)
+router.post('/threads/:id/messages', secureRoute, threadController.messageCreate)
 
 module.exports = router

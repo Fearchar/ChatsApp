@@ -8,16 +8,8 @@ function createRoute(req, res, next) {
 }
 
 function showRoute(req, res, next) {
-  Thread.findById(req.params.id).populate('messages')
-    .then(thread => !thread ? res.sendStatus(404) : Thread.populate(
-      thread,
-      {
-        path: 'messages',
-        modal: 'Message',
-        select: 'content'
-      }
-    ))
-    .then(thread => res.json(thread))
+  Thread.findById(req.params.id)
+    .then(thread => !thread ? res.sendStatus(404) : res.json(thread))
     .catch(next)
 }
 
@@ -44,6 +36,10 @@ function changeUserStatusRoutes(req, res, next, changeTo = 'participant') {
       User.findById(req.params.userId)
         .then(user => {
           if (!user) return res.sendStatus(404)
+          user.threads.addToSet(req.params.threadId)
+          return user.save()
+        })
+        .then(user => {
           thread[`${changeFrom}s`].pull(user._id)
           thread[`${changeTo}s`].addToSet(user._id)
           return thread.save()
@@ -64,6 +60,19 @@ function removeUserRoutes(req, res, next, userType) {
     .catch(next)
 }
 
+function messageCreateRoute(req, res, next) {
+  req.body.user = req.currentUser._id
+
+  Thread.findById(req.params.id)
+    .then(thread => {
+      if(!thread) return res.sendStatus(404)
+      thread.messages.addToSet(req.body)
+      return thread.save()
+    })
+    .then(thread => res.json(thread))
+    .catch(next)
+}
+
 module.exports = {
   create: createRoute,
   show: showRoute,
@@ -73,5 +82,6 @@ module.exports = {
   removeUser: (req, res, next) => removeUserRoutes(req, res, next, 'participant'),
   promoteUser: (req, res, next) => changeUserStatusRoutes(req, res, next, 'admin'),
   removeAdmin: (req, res, next) => removeUserRoutes(req, res, next, 'admin'),
-  demoteAdmin: changeUserStatusRoutes
+  demoteAdmin: changeUserStatusRoutes,
+  messageCreate: messageCreateRoute
 }

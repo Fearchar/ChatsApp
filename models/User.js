@@ -11,11 +11,11 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: 'Please provide a {PATH}' },
     imageUrl: { type: String, required: false },
     contacts: { type: [ mongoose.Schema.ObjectId ], ref: 'User' },
+    threads: { type: [ mongoose.Schema.ObjectId ], ref: 'Thread' },
     id: false
   },
   {
     toJSON: {
-      virtuals: true,
       transform(doc, json) {
         delete json.password
         return json
@@ -23,18 +23,6 @@ const userSchema = new mongoose.Schema(
     }
   }
 )
-
-userSchema.virtual('adminThreads', {
-  localField: '_id',
-  foreignField: 'admins',
-  ref: 'Thread'
-})
-
-userSchema.virtual('participantThreads', {
-  localField: '_id',
-  foreignField: 'participants',
-  ref: 'Thread'
-})
 
 userSchema.virtual('passwordConfirmation')
   .set(function setPasswordConfirmation(plaintext){
