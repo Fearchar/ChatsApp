@@ -30,13 +30,13 @@ function deleteRoute(req, res, next) {
 
 function changeUserStatusRoutes(req, res, next, changeTo = 'participant') {
   const changeFrom = changeTo === 'admin' ? 'participant' : 'admin'
-  Thread.findById(req.params.threadId)
+  Thread.findById(req.params.id)
     .then(thread => {
       if (!thread) return res.sendStatus(404)
       User.findById(req.params.userId)
         .then(user => {
           if (!user) return res.sendStatus(404)
-          user.threads.addToSet(req.params.threadId)
+          user.threads.addToSet(req.params.id)
           return user.save()
         })
         .then(user => {
@@ -50,7 +50,7 @@ function changeUserStatusRoutes(req, res, next, changeTo = 'participant') {
 }
 
 function removeUserRoutes(req, res, next, userType) {
-  Thread.findById(req.params.threadId)
+  Thread.findById(req.params.id)
     .then(thread => {
       if (!thread) return res.sendStatus(404)
       thread[`${userType}s`].pull(req.params.userId)
@@ -62,7 +62,6 @@ function removeUserRoutes(req, res, next, userType) {
 
 function messageCreateRoute(req, res, next) {
   req.body.user = req.currentUser._id
-
   Thread.findById(req.params.id)
     .then(thread => {
       if(!thread) return res.sendStatus(404)
@@ -70,6 +69,20 @@ function messageCreateRoute(req, res, next) {
       return thread.save()
     })
     .then(thread => res.json(thread))
+    .catch(next)
+}
+
+function messageClearRoute(req, res, next) {
+  Thread.findById(req.params.id)
+    .then(thread => {
+      if (!thread) return res.sendStatus(404)
+      const message = thread.messages.id(req.params.messageId)
+      if (req.currentUser._id !== message.user._id) return res.sendStatus(401)
+      message.content = ''
+      message.cleared = true
+      return thread.save()
+    })
+    .then(message => res.json(message).status(204))
     .catch(next)
 }
 
@@ -83,5 +96,6 @@ module.exports = {
   promoteUser: (req, res, next) => changeUserStatusRoutes(req, res, next, 'admin'),
   removeAdmin: (req, res, next) => removeUserRoutes(req, res, next, 'admin'),
   demoteAdmin: changeUserStatusRoutes,
-  messageCreate: messageCreateRoute
+  messageCreate: messageCreateRoute,
+  messageClear: messageClearRoute
 }

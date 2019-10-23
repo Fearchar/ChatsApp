@@ -17,12 +17,13 @@ router.route('/threads/:id')
   .get(threadController.show)
   .put(threadController.update)
   .delete(threadController.delete)
-router.put('/threads/:threadId/users/:userId/add', threadController.addUser)
-router.put('/threads/:threadId/users/:userId/remove', threadController.removeUser)
-router.put('/threads/:threadId/users/:userId/promote', threadController.promoteUser)
-router.put('/threads/:threadId/admins/:userId/remove', threadController.removeAdmin)
-router.put('/threads/:threadId/admins/:userId/demote', threadController.demoteAdmin)
+router.put('/threads/:id/users/:userId/add', threadController.addUser)
+router.put('/threads/:id/users/:userId/remove', threadController.removeUser)
+router.put('/threads/:id/users/:userId/promote', threadController.promoteUser)
+router.put('/threads/:id/admins/:userId/remove', threadController.removeAdmin)
+router.put('/threads/:id/admins/:userId/demote', threadController.demoteAdmin)
 
 router.post('/threads/:id/messages', secureRoute, threadController.messageCreate)
+router.put('/threads/:id/messages/:messageId', secureRoute, threadController.messageClear)
 
 module.exports = router

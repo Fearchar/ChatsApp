@@ -1,12 +1,16 @@
 const mongoose = require('mongoose')
 
+// !!! Keep note: Allows empty String types
+mongoose.Schema.Types.String.checkRequired(v => v !== null)
+
 const messageSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.ObjectId, ref: 'User' },
-    content: { type: String, required: 'Please provide {PATH}', maxlength: [
+    content: { type: String, required: 'Please provide {PATH}', minimize: false, maxlength: [
       2000,
       'Messages can be no longer that 2000 characters. Please choose a shorten your message.'
-    ] }
+    ] },
+    cleared: { type: Boolean }
   },
   { timestamps: true }
 )
@@ -26,9 +30,9 @@ const threadSchema = new mongoose.Schema(
   }
 )
 
-threadSchema.pre('validate', function checkUsers(next){
+threadSchema.pre('validate', function checkUsers(next) {
   if (this.admins.length < 1) {
-    this.invalidate('thread', 'Requires at least one admin.')
+    this.invalidate('admins', 'Thread requires at least one admin.')
   }
   next()
 })
