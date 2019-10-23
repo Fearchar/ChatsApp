@@ -64,7 +64,9 @@ function messageCreateRoute(req, res, next) {
   req.body.user = req.currentUser._id
   Thread.findById(req.params.id)
     .then(thread => {
-      if(!thread) return res.sendStatus(404)
+      if (!thread) return res.sendStatus(404)
+      const users = [ ...thread.admins, ...thread.participants ]
+      if (!users.some(id => req.currentUser._id.equals(id))) return res.sendStatus(401)
       thread.messages.addToSet(req.body)
       return thread.save()
     })
@@ -77,12 +79,12 @@ function messageClearRoute(req, res, next) {
     .then(thread => {
       if (!thread) return res.sendStatus(404)
       const message = thread.messages.id(req.params.messageId)
-      if (req.currentUser._id !== message.user._id) return res.sendStatus(401)
+      if (!req.currentUser._id.equals(message.user._id)) return res.sendStatus(401)
       message.content = ''
       message.cleared = true
       return thread.save()
     })
-    .then(message => res.json(message).status(204))
+    .then(thread => res.json(thread).status(204))
     .catch(next)
 }
 

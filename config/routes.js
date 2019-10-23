@@ -24,6 +24,6 @@ router.put('/threads/:id/admins/:userId/remove', threadController.removeAdmin)
 router.put('/threads/:id/admins/:userId/demote', threadController.demoteAdmin)
 
 router.post('/threads/:id/messages', secureRoute, threadController.messageCreate)
-router.put('/threads/:id/messages/:messageId', secureRoute, threadController.messageClear)
+router.put('/threads/:id/messages/:messageId/clear', secureRoute, threadController.messageClear)
 
 module.exports = router
