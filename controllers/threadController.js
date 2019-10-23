@@ -66,7 +66,11 @@ function messageCreateRoute(req, res, next) {
     .then(thread => {
       if (!thread) return res.sendStatus(404)
       const users = [ ...thread.admins, ...thread.participants ]
-      if (!users.some(id => req.currentUser._id.equals(id))) return res.sendStatus(401)
+      // !!! I'm unclear why returning res.sendStatus is leading to circular JSON.stringify error. The below has resolved this.
+      if (!users.some(id => req.currentUser._id.equals(id))) {
+        res.sendStatus(401)
+        return
+      }
       thread.messages.addToSet(req.body)
       return thread.save()
     })
