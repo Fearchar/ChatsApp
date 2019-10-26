@@ -12,18 +12,21 @@ function showRoute(req, res, next) {
     .then(thread => !thread ? res.sendStatus(404) : res.json(thread))
     .catch(next)
 }
-
-function updateRoute(req, res, next) {
-  Thread.findById(req.params.id)
-    .then(thread => !thread ? res.sendStatus(404) : thread.set(req.body))
-    .then(thread => thread.save())
-    .then(thread => res.json(thread))
-    .catch(next)
-}
+//!!! I need to make it so only the name can be updated.
+// function updateRoute(req, res, next) {
+//   Thread.findById(req.params.id)
+//     .then(thread => !thread ? res.sendStatus(404) : thread.set(req.body))
+//     .then(thread => thread.save())
+//     .then(thread => res.json(thread))
+//     .catch(next)
+// }
 
 function deleteRoute(req, res, next) {
   Thread.findById(req.params.id)
-    .then(thread => !thread ? res.sendStatus(404) : thread.remove())
+    .then(thread => {
+      if (!thread) res.sendStatus(404)
+      else return thread.remove()
+    })
     .then(() => res.sendStatus(204))
     .catch(next)
 }
@@ -37,15 +40,15 @@ function changeUserStatusRoutes(req, res, next, changeTo = 'participant') {
         .then(user => {
           if (!user) return res.sendStatus(404)
           user.threads.addToSet(req.params.id)
-          return user.save()
+          user.save()
+            .then(user => {
+              thread[`${changeFrom}s`].pull(user._id)
+              thread[`${changeTo}s`].addToSet(user._id)
+              return thread.save()
+            })
+            .then(thread => res.json(thread))
+            .catch(next)
         })
-        .then(user => {
-          thread[`${changeFrom}s`].pull(user._id)
-          thread[`${changeTo}s`].addToSet(user._id)
-          return thread.save()
-        })
-        .then(thread => res.json(thread))
-        .catch(next)
     })
 }
 
@@ -54,10 +57,15 @@ function removeUserRoutes(req, res, next, userType) {
     .then(thread => {
       if (!thread) return res.sendStatus(404)
       thread[`${userType}s`].pull(req.params.userId)
-      return thread.save()
+      thread.save()
+        .then(thread => res.json(thread))
+        .catch(next)
     })
-    .then(thread => res.json(thread))
-    .catch(next)
+}
+
+function isThreadUser(thread, user) {
+  const threadUsers = [ ...thread.admins, ...thread.participants ]
+  return threadUsers.some(id => user._id.equals(id))
 }
 
 function messageCreateRoute(req, res, next) {
@@ -65,17 +73,12 @@ function messageCreateRoute(req, res, next) {
   Thread.findById(req.params.id)
     .then(thread => {
       if (!thread) return res.sendStatus(404)
-      const users = [ ...thread.admins, ...thread.participants ]
-      // !!! I'm unclear why returning res.sendStatus is leading to circular JSON.stringify error. The below has resolved this.
-      if (!users.some(id => req.currentUser._id.equals(id))) {
-        res.sendStatus(401)
-        return
-      }
+      if (!isThreadUser(thread, req.currentUser)) return res.sendStatus(401)
       thread.messages.addToSet(req.body)
-      return thread.save()
+      thread.save()
+        .then(thread => res.json(thread))
+        .catch(next)
     })
-    .then(thread => res.json(thread))
-    .catch(next)
 }
 
 function messageClearRoute(req, res, next) {
@@ -83,19 +86,22 @@ function messageClearRoute(req, res, next) {
     .then(thread => {
       if (!thread) return res.sendStatus(404)
       const message = thread.messages.id(req.params.messageId)
-      if (!req.currentUser._id.equals(message.user._id)) return res.sendStatus(401)
+      if (
+        !req.currentUser._id.equals(message.user._id) ||
+        !isThreadUser(thread, req.currentUser)
+      ) return res.sendStatus(401)
       message.content = ''
       message.cleared = true
-      return thread.save()
+      thread.save()
+        .then(thread => res.json(thread).status(204))
+        .catch(next)
     })
-    .then(thread => res.json(thread).status(204))
-    .catch(next)
 }
 
 module.exports = {
   create: createRoute,
   show: showRoute,
-  update: updateRoute,
+  // update: updateRoute,
   delete: deleteRoute,
   addUser: changeUserStatusRoutes,
   removeUser: (req, res, next) => removeUserRoutes(req, res, next, 'participant'),
