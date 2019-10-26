@@ -12,14 +12,17 @@ function showRoute(req, res, next) {
     .then(thread => !thread ? res.sendStatus(404) : res.json(thread))
     .catch(next)
 }
-//!!! I need to make it so only the name can be updated.
-// function updateRoute(req, res, next) {
-//   Thread.findById(req.params.id)
-//     .then(thread => !thread ? res.sendStatus(404) : thread.set(req.body))
-//     .then(thread => thread.save())
-//     .then(thread => res.json(thread))
-//     .catch(next)
-// }
+
+function changeNameRoute(req, res, next) {
+  Thread.findById(req.params.id)
+    .then(thread => {
+      if (!thread) return res.sendStatus(404)
+      thread.set(req.body.name)
+      thread.save()
+        .then(thread => res.json(thread))
+        .catch(next)
+    })
+}
 
 function deleteRoute(req, res, next) {
   Thread.findById(req.params.id)
@@ -93,7 +96,7 @@ function messageClearRoute(req, res, next) {
 module.exports = {
   create: createRoute,
   show: showRoute,
-  // update: updateRoute,
+  changeName: changeNameRoute,
   delete: deleteRoute,
   addUser: changeUserStatusRoutes,
   removeUser: (req, res, next) => removeUserRoutes(req, res, next, 'participant'),
