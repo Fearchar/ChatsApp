@@ -10,15 +10,14 @@ function registerRoute(req, res, next) {
 }
 
 function loginRoute(req, res, next) {
-  User.findOne({ email: req.body.email })
-    .then(user => {
-      if (
-        !user ||
-        !user.validatePassword(req.body.password)
-      ) return res.sendStatus(401)
-      const token = jwt.sign({ sub: user._id }, secret, { expiresIn: '6h' })
-      res.json({ token, message: `Welcome back to the conversation ${user.name}` })
-    })
+  User.findOne({ email: req.body.email }).then(user => {
+    if (
+      !user ||
+      !user.validatePassword(req.body.password)
+    ) return res.sendStatus(401)
+    const token = jwt.sign({ sub: user._id }, secret, { expiresIn: '6h' })
+    res.json({ token, message: `Welcome back to the conversation ${user.name}` })
+  })
     .catch(next)
 }
 
@@ -35,38 +34,37 @@ function indexRoute(req, res, next) {
 }
 
 function updateRoute(req, res, next) {
-  User.findById(req.params.id)
-    .then(user => !user ? res.sendStatus(404) : user.set(req.body))
-    .then(user => user.save())
-    .then(user => res.json(user))
-    .catch(next)
+  User.findById(req.params.id).then(user => {
+    if (!user) return res.sendStatus(404)
+    user.set(req.body)
+    user.save()
+      .then(user => res.json(user))
+      .catch(next)
+  })
 }
 
 function deleteRoute(req, res, next) {
-  User.findById(req.params.id)
-    .then(user => !user ? res.sendStatus(404) : user.remove())
-    .then(() => res.sendStatus(204))
-    .catch(next)
+  User.findById(req.params.id).then(user => {
+    if (!user) return res.sendStatus(404)
+    user.remove()
+      .then(() => res.sendStatus(204))
+      .catch(next)
+  })
 }
 
 function showThreadIndexRoute(req, res, next) {
-  User.findById(req.params.id)
-    .then(user => !user ? res.sendStatus(404) : User.populate(
-      user,
+  User.findById(req.params.id).then(user => {
+    if (!user) return res.sendStatus(404)
+    User.populate(user,
       {
-        path: 'participantThreads',
+        path: 'threads',
         modal: 'Thread',
         select: 'name admins participants lastMessage lastMessageDate'
-      }))
-    .then(user => User.populate(
-      user,
-      {
-        path: 'adminThreads',
-        modal: 'Thread',
-        select: 'name admins participants lastMessage lastMessageDate'
-      }))
-    .then(user => res.json(user))
-    .catch(next)
+      }
+    )
+      .then(user => res.json(user))
+      .catch(next)
+  })
 }
 
 module.exports = {

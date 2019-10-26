@@ -21,10 +21,10 @@ const threadSchema = new mongoose.Schema(
       40,
       'Thread names can be no longer that 40 characters. Please choose a shorter thread name.'
     ] },
-    messages: { type: [ messageSchema ], ref: 'User'},
+    messages: [ { type: messageSchema , ref: 'User'} ],
     nameSpace: { type: String, unique: true, required: true },
-    admins: { type: [ mongoose.Schema.ObjectId ], ref: 'User'},
-    participants: { type: [ mongoose.Schema.ObjectId ], ref: 'User'},
+    admins: [ { type: mongoose.Schema.ObjectId , ref: 'User'} ],
+    participants: [ { type: mongoose.Schema.ObjectId , ref: 'User'} ],
     lastMessage: { type: String },
     lastMessageDate: { type: Date }
   }

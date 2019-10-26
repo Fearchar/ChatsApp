@@ -10,8 +10,8 @@ const userSchema = new mongoose.Schema(
     email: { type: String, unique: true, required: 'Please provide a {PATH}', select: false },
     password: { type: String, required: 'Please provide a {PATH}' },
     imageUrl: { type: String, required: false },
-    contacts: { type: [ mongoose.Schema.ObjectId ], ref: 'User' },
-    threads: { type: [ mongoose.Schema.ObjectId ], ref: 'Thread' },
+    contacts: [ { type: mongoose.Schema.ObjectId , ref: 'User' } ],
+    threads: [ { type: mongoose.Schema.ObjectId , ref: 'Thread' } ],
     id: false
   },
   {
