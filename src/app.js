@@ -1,12 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import 'bulma'
 
-class App extends React.Component {
-  render() {
-    return (
-      <div>Hello World!</div>
-    )
-  }
+import ChatPane from './components/ChatPane'
+
+const App = () => {
+  return (
+    <ChatPane />
+  )
 }
 
 ReactDOM.render(

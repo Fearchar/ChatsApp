@@ -11,10 +11,10 @@ const router = require('./config/routes')
 const errorHandler = require('./lib/errorHandler')
 
 const app = express()
-app.use(morgan('tiny'))
 mongoose.connect(dbURI, { useNewUrlParser: true })
 app.use(express.static(`${__dirname}/dist`))
 app.use(bodyParser.json())
+app.use(morgan('tiny'))
 app.use(router)
 app.use(errorHandler)
 
