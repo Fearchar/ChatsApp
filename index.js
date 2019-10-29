@@ -3,10 +3,9 @@ const mongoose = require('mongoose')
 mongoose.plugin(require('mongoose-unique-validator'), {
   message: 'The chosen {PATH} is not unique. Please provide another'
 })
-const morgan = require('morgan')
-
-const { port, dbURI } = require('./config/environment')
 const bodyParser = require('body-parser')
+const morgan = require('morgan')
+const { port, dbURI } = require('./config/environment')
 const router = require('./config/routes')
 const errorHandler = require('./lib/errorHandler')
 
