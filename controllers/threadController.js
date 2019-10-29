@@ -72,7 +72,10 @@ function messageCreateRoute(req, res, next) {
     if (!isThreadUser(thread, req.currentUser)) return res.sendStatus(401)
     thread.messages.addToSet(req.body)
     thread.save()
-      .then(thread => res.json(thread))
+      .then(thread => {
+        req.app.io.emit('thread', thread)
+        res.json(thread)
+      })
       .catch(next)
   })
 }
