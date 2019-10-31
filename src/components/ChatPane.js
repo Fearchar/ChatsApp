@@ -4,7 +4,6 @@ import axios from 'axios'
 import Message from './Message'
 
 const ChatPane = ({ socket }) => {
-
   const [ thread, setThread ] = useState(null)
 
   useEffect(() => {
