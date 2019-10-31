@@ -14,6 +14,9 @@
       "jsx": true
     }
   },
+  "plugins": [
+    "react-hooks"
+  ],
   "rules": {
     "brace-style": "error",
     "camelcase": ["error", { "properties": "never" }],
@@ -27,6 +30,8 @@
     "prefer-const": "error",
     "quotes": [ "error", "single" ],
     "semi": [ "error", "never" ],
-    "react/prop-types": [ 0 ]
+    "react/prop-types": [ 0 ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }
