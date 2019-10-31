@@ -19,7 +19,7 @@
   ],
   "rules": {
     "brace-style": "error",
-    "camelcase": ["error", { "properties": "never" }],
+    "camelcase": [ "error", { "properties": "never" } ],
     "comma-dangle": ["error", "never"],
     "func-call-spacing": ["error", "never"],
     "eqeqeq": "warn",
@@ -30,6 +30,8 @@
     "prefer-const": "error",
     "quotes": [ "error", "single" ],
     "semi": [ "error", "never" ],
+    "array-bracket-spacing": [ "error", "always" ],
+    "object-curly-spacing": [ "error", "always" ],
     "react/prop-types": [ 0 ],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn"

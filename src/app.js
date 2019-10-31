@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import 'bulma'
 
@@ -9,7 +9,6 @@ import ChatPane from './components/ChatPane'
 const socket = io.connect(`http://localhost:${port}`)
 
 const App = () => {
-
   return (
     <ChatPane socket={socket} />
   )
