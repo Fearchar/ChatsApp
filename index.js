@@ -19,13 +19,21 @@ app.use(express.static(`${__dirname}/dist`))
 app.use(bodyParser.json())
 app.use(morgan('tiny'))
 app.use(resStatusEmit(io))
-app.use(router)
+app.use('/api', router)
 app.use(errorHandler)
 
 io.on('connection', (socket) => {
-  console.log('io:', `user-${socket.id} has connected.`)
+  console.log('io:', `socket-${socket.id} has connected.`)
   socket.on('disconnect', () => {
-    console.log('io:', `user-${socket.id} has disconnected.`)
+    console.log('io:', `socket-${socket.id} has disconnected.`)
+  })
+  socket.on('thread:join', (room) => {
+    socket.join(room)
+    console.log('io:', `socket-${socket.id} has joined room-${room}.`)
+  })
+  socket.on('thread:leave', (room) => {
+    socket.leave(room)
+    console.log('io:', `socket-${socket.id} has left room-${room}.`)
   })
 })
 
