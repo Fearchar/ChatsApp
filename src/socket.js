@@ -3,4 +3,4 @@ import { port } from '../config/environment'
 
 const socket = io.connect(`http://localhost:${port}`)
 
-export { socket }
+export default socket
