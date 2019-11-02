@@ -1,8 +1,16 @@
 import React from 'react'
 
-const Form = ({ title, fields,  children }) => {
-  return(
-    <form className="box">
+class Field {
+  constructor(name, type, placeholder) {
+    this.name = name
+    this.type = type
+    this.placeholder = placeholder
+  }
+}
+
+const Form = ({ title, hasbox, fields, children }) => {
+  return (
+    <form className={`${hasbox ? 'box' : ''}`}>
       {title && <h2 className="title">{title}</h2>}
       {fields.map((field, i) =>
         <div
@@ -24,4 +32,4 @@ const Form = ({ title, fields,  children }) => {
   )
 }
 
-export default Form
+export { Form, Field }
