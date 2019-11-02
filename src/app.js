@@ -6,8 +6,7 @@ import './scss/style.scss'
 
 // import io from 'socket.io-client'
 // import { port } from '../config/environment'
-import Login from './components/Auth/Login'
-import Register from './components/Auth/Register'
+import Auth from './components/Auth'
 
 // const socket = io.connect(`http://localhost:${port}`)
 
@@ -15,8 +14,14 @@ const App = () => {
   return (
     <HashRouter>
       <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
+        <Route
+          path="/login"
+          component={({ history }) => <Auth page="login" history={history}/>}
+        />
+        <Route
+          path="/register"
+          component={({ history }) => <Auth page="register" history={history}/>}
+        />
       </Switch>
     </HashRouter>
   )

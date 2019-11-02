@@ -1,8 +1,5 @@
 const mongoose = require('mongoose')
 
-// !!! Keep note: Allows empty String types
-mongoose.Schema.Types.String.checkRequired(v => v !== null)
-
 const messageSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.ObjectId, ref: 'User' },
@@ -17,14 +14,14 @@ const messageSchema = new mongoose.Schema(
 
 const threadSchema = new mongoose.Schema(
   {
-    name: { type: String, required: 'Please provide {PATH}', maxlength: [
+    name: { type: String, required: [ true, 'Please provide {PATH}' ], maxlength: [
       40,
       'Thread names can be no longer that 40 characters. Please choose a shorter thread name.'
     ] },
-    messages: [ { type: messageSchema , ref: 'User'} ],
+    messages: [ { type: messageSchema , ref: 'User' } ],
     nameSpace: { type: String, unique: true, required: true },
-    admins: [ { type: mongoose.Schema.ObjectId , ref: 'User'} ],
-    participants: [ { type: mongoose.Schema.ObjectId , ref: 'User'} ],
+    admins: [ { type: mongoose.Schema.ObjectId , ref: 'User' } ],
+    participants: [ { type: mongoose.Schema.ObjectId , ref: 'User' } ],
     lastMessage: { type: String },
     lastMessageDate: { type: Date }
   }

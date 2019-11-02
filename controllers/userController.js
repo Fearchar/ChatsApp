@@ -22,7 +22,7 @@ function loginRoute(req, res, next) {
 }
 
 function showRoute(req, res, next) {
-  User.findById(req.params.id)
+  User.findById(req.params.id).select('+email')
     .then(user => !user ? res.sendStatus(404) : res.json(user))
     .catch(next)
 }

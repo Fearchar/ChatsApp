@@ -1,7 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 mongoose.plugin(require('mongoose-unique-validator'), {
-  message: 'The chosen {PATH} is not unique. Please provide another'
+  message: 'The chosen {PATH} has been used before. Please provide another'
 })
 const app = express()
 const bodyParser = require('body-parser')
