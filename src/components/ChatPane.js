@@ -7,13 +7,12 @@ const ChatPane = ({ socket }) => {
   const [ thread, setThread ] = useState(null)
 
   useEffect(() => {
-
     function addMessage(message) {
       setThread(thread => {
         console.log('called')
-        const newThread = { ...thread }
-        newThread.messages.push(message)
-        return newThread
+        const threadCopy = { ...thread }
+        threadCopy.messages.push(message)
+        return threadCopy
       })
     }
 
