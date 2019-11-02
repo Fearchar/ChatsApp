@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { HashRouter, Switch, Route } from 'react-router-dom'
+import { HashRouter, Switch, Route, Redirect } from 'react-router-dom'
 import 'bulma'
 import './scss/style.scss'
 
@@ -22,6 +22,7 @@ const App = () => {
           path="/register"
           component={({ history }) => <Auth page="register" history={history}/>}
         />
+        <Redirect path="/" to={'/login'}/>
       </Switch>
     </HashRouter>
   )

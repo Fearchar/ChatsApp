@@ -11,7 +11,15 @@ class Field {
   }
 }
 
-const Form = ({ title, hasBox, fields, fieldErrors, fieldSetter, onSubmit, children }) => {
+const Form = ({
+  title,
+  hasBox,
+  fields,
+  fieldErrors,
+  fieldSetter,
+  onSubmit,
+  children
+}) => {
   function handleChange({ target }) {
     fieldSetter(fields => ({ ...fields, [target.name]: target.value }))
   }

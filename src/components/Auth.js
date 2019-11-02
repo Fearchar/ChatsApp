@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
-import { Form, Field } from './lib/Form'
+import { Form, Field } from './common/Form'
 
 const Auth = ({ page, history }) => {
   const [ fieldValues, setFieldValues ] = useState(/* { fieldName: fieldValue, } */)
