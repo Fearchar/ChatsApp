@@ -1,31 +1,29 @@
-const initialState = { threads: [] }
+function threadsReducer(state, action) {
+  const threads = [ ...state.threads ]
 
-function threadsReducer(threads, action) {
-  const threadsCopy = [ ...threads ]
-
-  function threadIndex(thread) {
-    return threadsCopy.findIndex(t => t._id === thread._id)
+  function threadIndex(threadId) {
+    return threads.findIndex(t => t._id === threadId)
   }
 
   switch(action.type) {
     case 'thread:new': {
-      threadsCopy.push(action.thread)
-      return { threads: threadsCopy }
+      threads.push(action.thread)
+      return { threads }
     }
 
     case 'thread:delete': {
-      threadsCopy.splice(threadIndex(action.thread), 1)
-      return { threads: threadsCopy }
+      threads.splice(threadIndex(action.thread), 1)
+      return { threads }
     }
 
     case 'message:new': {
-      threadsCopy[threadIndex(action.thread)].push(action.message)
-      return { threads: threadsCopy }
+      threads[threadIndex(action.threadId)].messages.push(action.message)
+      return { threads }
     }
 
     case 'message:delete': {
-      threadsCopy.splice(threadIndex(action.thread), 1)
-      return { threads: threadsCopy }
+      threads.splice(threadIndex(action.thread), 1)
+      return { threads }
     }
 
     default: {
@@ -34,4 +32,4 @@ function threadsReducer(threads, action) {
   }
 }
 
-export { threadsReducer, initialState }
+export default threadsReducer

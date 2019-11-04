@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const messageSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.ObjectId, ref: 'User' },
-    content: { type: String, required: 'Please provide {PATH}', minimize: false, maxlength: [
+    content: { type: String, maxlength: [
       2000,
       'Messages can be no longer that 2000 characters. Please choose a shorten your message.'
     ] },
@@ -27,7 +27,14 @@ const threadSchema = new mongoose.Schema(
   }
 )
 
-threadSchema.pre('validate', function checkUsers(next) {
+messageSchema.pre('validate', function checkHash(next) {
+  if (!this.cleared && !this.content) {
+    this.invalidate('content', 'Please provide content.')
+  }
+  next()
+})
+
+threadSchema.pre('validate', function checkForAdmins(next) {
   if (this.admins.length < 1) {
     this.invalidate('admins', 'Thread requires at least one admin.')
   }
