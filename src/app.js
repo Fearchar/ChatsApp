@@ -19,10 +19,6 @@ const App = () => {
   )
 
   useEffect(() => {
-    function addMessage(threadId, message) {
-      threadsDispatch({ type: 'message:new', threadId, message })
-    }
-
     function getThread() {
       axios.get('/api/threads/5dc043a4a1a3497d364852b5')
         .then(res => {
@@ -32,9 +28,11 @@ const App = () => {
         })
     }
 
-    socket.on('message:new', addMessage)
+    socket.on('message:new', (threadId, message) => {
+      threadsDispatch({ type: 'message:new', threadId, message })
+    })
+
     getThread()
-    return () => socket.removeListener('message:new', addMessage)
   }, [])
 
   console.log(threadsState)
