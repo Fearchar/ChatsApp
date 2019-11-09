@@ -23,16 +23,14 @@ class Auth {
     return payload && dateNow < payload.exp
   }
 
-  static getCurrentUserId() {
+  static getClientId() {
     const payload = this.getPayload()
     return payload && payload.sub
   }
 
-  static isCurrentUser(user) {
-    return this.getCurrentUserId() === user._id
+  static isClient(user) {
+    return this.getClientId() === user._id
   }
-
-
 }
 
 export default Auth
