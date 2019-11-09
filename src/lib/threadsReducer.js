@@ -2,7 +2,7 @@ function threadsReducer(state, action) {
   const threads = [ ...state.threads ]
 
   function threadIndex(threadId) {
-    return threads.findIndex(t => t._id === threadId)
+    return threads.findIndex(thread => thread._id === threadId)
   }
 
   switch(action.type) {
@@ -11,13 +11,17 @@ function threadsReducer(state, action) {
       return { threads }
     }
 
+    case 'thread:index': {
+      return { threads: action.threads }
+    }
+
     case 'thread:delete': {
       threads.splice(threadIndex(action.thread), 1)
       return { threads }
     }
 
     case 'message:new': {
-      threads[threadIndex(action.threadId)].messages.push(action.message)
+      threads[threadIndex(action.threadId)].push(action.message)
       return { threads }
     }
 
@@ -27,7 +31,7 @@ function threadsReducer(state, action) {
     }
 
     default: {
-      throw new Error()
+      throw new Error(`Unrecognised case in threadsReducer: "${action.type}"`)
     }
   }
 }

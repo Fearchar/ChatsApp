@@ -2,8 +2,13 @@ const Thread = require('../models/Thread')
 const User = require('../models/User')
 
 function createRoute(req, res, next) {
+  req.body.admins = [ req.currentUser._id ]
   Thread.create(req.body)
-    .then(thread => res.json(thread))
+    .then(thread => {
+      req.currentUser.threads.addToSet(thread)
+      req.currentUser.save()
+        .then(() => res.json(thread))
+    })
     .catch(next)
 }
 

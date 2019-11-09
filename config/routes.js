@@ -12,7 +12,7 @@ router.route('/users/:id')
   .delete(userController.delete)
 router.get('/users/:id/threads', userController.showThreadIndex)
 
-router.post('/threads', threadController.create)
+router.post('/threads', secureRoute, threadController.create)
 router.route('/threads/:id')
   .get(threadController.show)
   .put(threadController.changeName)
