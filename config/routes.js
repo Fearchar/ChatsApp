@@ -10,7 +10,7 @@ router.route('/users/:id')
   .get(userController.show)
   .put(userController.update)
   .delete(userController.delete)
-router.get('/users/:id/threads', userController.showThreadIndex)
+router.get('/users/:id/threads', userController.userThreadIndex)
 
 router.post('/threads', secureRoute, threadController.create)
 router.route('/threads/:id')

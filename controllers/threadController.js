@@ -25,8 +25,8 @@ function changeNameRoute(req, res, next) {
       thread.set(req.body.name)
       thread.save()
         .then(thread => res.json(thread))
-        .catch(next)
     })
+    .catch(next)
 }
 
 function deleteRoute(req, res, next) {
@@ -39,30 +39,33 @@ function deleteRoute(req, res, next) {
 
 function changeUserStatusRoutes(req, res, next, changeTo = 'participant') {
   const changeFrom = changeTo === 'admin' ? 'participant' : 'admin'
-  Thread.findById(req.params.id).then(thread => {
-    User.findById(req.params.userId).then(user => {
-      if (!thread || !user) return res.sendStatus(404)
-      user.threads.addToSet(req.params.id)
-      user.save()
+  Thread.findById(req.params.id)
+    .then(thread => {
+      User.findById(req.params.userId)
         .then(user => {
-          thread[`${changeFrom}s`].pull(user._id)
-          thread[`${changeTo}s`].addToSet(user._id)
-          return thread.save()
+          if (!thread || !user) return res.sendStatus(404)
+          user.threads.addToSet(req.params.id)
+          user.save()
+            .then(user => {
+              thread[`${changeFrom}s`].pull(user._id)
+              thread[`${changeTo}s`].addToSet(user._id)
+              return thread.save()
+            })
+            .then(thread => res.json(thread))
         })
-        .then(thread => res.json(thread))
-        .catch(next)
     })
-  })
+    .catch(next)
 }
 
 function removeUserRoutes(req, res, next, userType) {
-  Thread.findById(req.params.id).then(thread => {
-    if (!thread) return res.sendStatus(404)
-    thread[`${userType}s`].pull(req.params.userId)
-    thread.save()
-      .then(thread => res.json(thread))
-      .catch(next)
-  })
+  Thread.findById(req.params.id)
+    .then(thread => {
+      if (!thread) return res.sendStatus(404)
+      thread[`${userType}s`].pull(req.params.userId)
+      thread.save()
+        .then(thread => res.json(thread))
+    })
+    .catch(next)
 }
 
 function isThreadUser(thread, user) {
@@ -72,31 +75,33 @@ function isThreadUser(thread, user) {
 
 function messageCreateRoute(req, res, next) {
   req.body.user = req.currentUser._id
-  Thread.findById(req.params.id).then(thread => {
-    if (!thread) return res.sendStatus(404)
-    if (!isThreadUser(thread, req.currentUser)) return res.sendStatus(401)
-    thread.messages.addToSet(req.body)
-    const message = thread.messages[thread.messages.length - 1]
-    thread.save()
-      .then(thread => res.statusEmit('message:new', thread._id, message))
-      .catch(next)
-  })
+  Thread.findById(req.params.id)
+    .then(thread => {
+      if (!thread) return res.sendStatus(404)
+      if (!isThreadUser(thread, req.currentUser)) return res.sendStatus(401)
+      thread.messages.addToSet(req.body)
+      const message = thread.messages[thread.messages.length - 1]
+      thread.save()
+        .then(thread => res.statusEmit('message:new', thread._id, message))
+    })
+    .catch(next)
 }
 
 function messageClearRoute(req, res, next) {
-  Thread.findById(req.params.id).then(thread => {
-    if (!thread) return res.sendStatus(404)
-    const message = thread.messages.id(req.params.messageId)
-    if (
-      !req.currentUser._id.equals(message.user._id) ||
-      !isThreadUser(thread, req.currentUser)
-    ) return res.sendStatus(401)
-    message.content = ''
-    message.cleared = true
-    thread.save()
-      .then(thread => res.json(thread).status(204))
-      .catch(next)
-  })
+  Thread.findById(req.params.id)
+    .then(thread => {
+      if (!thread) return res.sendStatus(404)
+      const message = thread.messages.id(req.params.messageId)
+      if (
+        !req.currentUser._id.equals(message.user._id) ||
+        !isThreadUser(thread, req.currentUser)
+      ) return res.sendStatus(401)
+      message.content = ''
+      message.cleared = true
+      thread.save()
+        .then(thread => res.json(thread).status(204))
+    })
+    .catch(next)
 }
 
 module.exports = {

@@ -21,7 +21,7 @@ function threadsReducer(state, action) {
     }
 
     case 'message:new': {
-      threads[threadIndex(action.threadId)].push(action.message)
+      threads[threadIndex(action.threadId)].messages.push(action.message)
       return { threads }
     }
 

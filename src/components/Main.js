@@ -7,7 +7,7 @@ import threadsReducer from '../lib/threadsReducer'
 import socket from '../socket'
 
 const Main = ({ history }) => {
-  const [ userThreads, threadsDispatch ] = useReducer(
+  const [ state, dispatch ] = useReducer(
     threadsReducer,
     { threads: [] }
   )
@@ -22,7 +22,7 @@ const Main = ({ history }) => {
       axios.get(`/api/users/${Auth.getCurrentUserId()}/threads`)
         .then(res => {
           const threads = res.data.threads
-          threadsDispatch({ type: 'thread:index', threads })
+          dispatch({ type: 'thread:index', threads })
           joinThreads(threads)
         })
         // !!! push to an error page?
@@ -31,7 +31,7 @@ const Main = ({ history }) => {
 
     function addMessage(threadId, message) {
       console.log(threadId, message)
-      threadsDispatch({ type: 'message:new', threadId, message })
+      dispatch({ type: 'message:new', threadId, message })
     }
 
     getThreads()
@@ -39,10 +39,10 @@ const Main = ({ history }) => {
     return () => socket.removeListener('message:new', addMessage)
   }, [ history ])
 
-  console.log(userThreads)
+  console.log(state.threads)
   return (
     <div>
-      <ChatPane thread={userThreads[0]}/>
+      <ChatPane thread={state.threads[0]}/>
     </div>
   )
 }
