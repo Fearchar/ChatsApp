@@ -27,15 +27,15 @@ const Login = ({ history }) => {
       <Form
         title="Login"
         hasBox={true}
-        fieldSetter={setFieldValues}
+        buttonName="Submit"
         fields={[
           new Field('Email', 'email', 'Enter email'),
           new Field('Password', 'password', 'Enter password')
         ]}
         fieldErrors={fieldErrors}
+        fieldSetter={setFieldValues}
         onSubmit={attemptLogin}
       >
-        <button className="button is-info">Submit</button>
         <hr />
         <p className="has-text-centered">Not registered?</p>
         <Link to="/register">

@@ -14,6 +14,7 @@ class Field {
 const Form = ({
   title,
   hasBox,
+  buttonName,
   fields,
   fieldErrors,
   fieldSetter,
@@ -38,7 +39,7 @@ const Form = ({
           key={i}
           className="field"
         >
-          <label className="label">{field.label}</label>
+          {field.label && <label className="label">{field.label}</label>}
           <div className="control">
             <input
               name={field.name}
@@ -51,6 +52,7 @@ const Form = ({
           {fieldErrors && <p className="help is-danger">{fieldErrors[field.name]}</p>}
         </div>
       )}
+      {buttonName && <button className="button is-info">{buttonName}</button>}
       {children}
     </form>
   )

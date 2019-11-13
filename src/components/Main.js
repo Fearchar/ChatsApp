@@ -2,15 +2,16 @@ import React, { useReducer, useEffect } from 'react'
 import io from 'socket.io-client'
 import axios from 'axios'
 
-import ChatPane from './ChatPane'
+import { Form, Field } from './common/Form'
 import Auth from '../lib/Auth'
+import ThreadPanel from './ThreadPanel'
 import { port } from '../../config/environment'
 import reducer from '../lib/reducer'
 
 const Main = ({ history }) => {
   const [ state, dispatch ] = useReducer(
     reducer,
-    { threads: [] }
+    { threads: [], user: null }
   )
 
   useEffect(() => {
@@ -47,11 +48,45 @@ const Main = ({ history }) => {
     return () => socket.disconnect()
   }, [ history ])
 
-  console.log(state.threads)
+  const { threads } = state
+  console.log('threads: ', threads)
   return (
-    <div>
-      <ChatPane thread={state.threads[0]}/>
-    </div>
+    <main>
+      <div className="columns is-variable is-0">
+        <div className="column is-4 card">
+          <div className="level card">
+            <div className="level-left" />
+            <div className="level-right top-bar">
+              <figure className="level-item image is-48x48 is-round">
+                <img className="is-rounded" src="https://www.fillmurray.com/300/200" alt="Placeholder image" />
+              </figure>
+              <i className="far fa-edit fa-2x"></i>
+              <i className="fas fa-chevron-down fa-2x"></i>
+            </div>
+          </div>
+          <div>
+            <Form fields={[ new Field('', 'text', 'Search') ]} />
+          </div>
+          <div className="card scrolls">
+            {threads && threads.map(thread => {
+              const lastMessage = thread.messages[thread.messages.length - 1]
+              return <div key={thread._id}>
+                <p className="has-text-weight-bold">{thread.name}</p>
+                <p>{
+                  thread.messages[0] ?
+                    `${lastMessage.user.name}: ${lastMessage.content.slice(0, 10)}` :
+                    '...'
+                }</p>
+                <hr />
+              </div>
+            }).reverse()}
+          </div>
+        </div>
+        <div className="column is-8 card">
+          <ThreadPanel thread={state.threads[0]}/>
+        </div>
+      </div>
+    </main>
   )
 }
 

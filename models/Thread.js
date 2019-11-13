@@ -21,7 +21,6 @@ const threadSchema = new mongoose.Schema(
     messages: [ { type: messageSchema } ],
     admins: [ { type: mongoose.Schema.ObjectId , ref: 'User' } ],
     participants: [ { type: mongoose.Schema.ObjectId , ref: 'User' } ],
-    lastMessage: { type: String },
     lastMessageDate: { type: Date }
   }
 )

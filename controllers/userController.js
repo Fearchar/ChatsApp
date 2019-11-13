@@ -68,7 +68,7 @@ function userThreadIndexRoute(req, res, next) {
     })
     .then(user => User.populate(user, {
       path: 'threads.messages.user',
-      select: '_id'
+      select: 'name'
     }))
     .then(user => res.json(user))
     .catch(next)

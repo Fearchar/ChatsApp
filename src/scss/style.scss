@@ -1,8 +1,31 @@
+$level-height: 7vh;
 
 * {
   box-sizing: border-box;
 }
 
 body {
+  height: 101vh;
+  margin: 0;
 
+  #root, main {
+    height: 100%;
+  }
+
+  #root main div.columns {
+    height: 100%;
+
+    div.top-bar {
+      height: $level-height;
+      margin: 0;
+    }
+
+    div.for-the-sake {
+      div.scrolls {
+        height: (99vh - $level-height);
+        overflow-y: scroll;
+
+      }
+    }
+  }
 }

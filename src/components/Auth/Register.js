@@ -19,7 +19,7 @@ const Register = ({ history }) => {
       <Form
         title="Register"
         hasBox={true}
-        fieldSetter={setFieldValues}
+        buttonName="Submit"
         fields={[
           new Field('Username', 'text', 'Enter username', 'name'),
           new Field('Email', 'email', 'Enter email'),
@@ -27,10 +27,9 @@ const Register = ({ history }) => {
           new Field('Password Confirmation', 'password', 'Confirm password')
         ]}
         fieldErrors={fieldErrors}
+        fieldSetter={setFieldValues}
         onSubmit={attemptRegister}
-      >
-        <button className="button is-info">Submit</button>
-      </Form>
+      />
     </AuthPage>
   )
 }
