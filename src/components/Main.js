@@ -70,14 +70,15 @@ const Main = ({ history }) => {
           <div className="card scrolls">
             {threads && threads.map(thread => {
               const lastMessage = thread.messages[thread.messages.length - 1]
-              return <div key={thread._id}>
+              return <div
+                className="box"
+                key={thread._id}
+              >
                 <p className="has-text-weight-bold">{thread.name}</p>
                 <p>{
                   thread.messages[0] ?
                     `${lastMessage.user.name}: ${lastMessage.content.slice(0, 10)}` :
-                    '...'
-                }</p>
-                <hr />
+                    '...'}</p>
               </div>
             }).reverse()}
           </div>

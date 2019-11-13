@@ -20,12 +20,10 @@ body {
       margin: 0;
     }
 
-    div.for-the-sake {
-      div.scrolls {
-        height: (99vh - $level-height);
-        overflow-y: scroll;
+    div.scrolls.specify {
+      height: (99vh - $level-height);
+      overflow-y: scroll;
 
-      }
     }
   }
 }
