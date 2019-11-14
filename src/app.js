@@ -5,8 +5,8 @@ import 'bulma'
 import './scss/style.scss'
 
 import Main from './components/Main'
-import Login from './components/Auth/Login'
-import Register from './components/Auth/Register'
+import Login from './components/auth/Login'
+import Register from './components/auth/Register'
 
 
 const App = () => {

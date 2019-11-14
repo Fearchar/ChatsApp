@@ -5,8 +5,8 @@ import AuthPage from './AuthPage'
 import { Form, Field } from '../common/Form'
 
 const Register = ({ history }) => {
-  const [ fieldValues, setFieldValues ] = useState(/* { fieldName: fieldValue, } */)
-  const [ fieldErrors, setFieldErrors ] = useState(/* { errorName: errorMessage } */)
+  const [ fieldValues, setFieldValues ] = useState(null) /* { fieldName: fieldValue, } */
+  const [ fieldErrors, setFieldErrors ] = useState(null) /* { errorName: errorMessage } */
 
   function attemptRegister() {
     axios.post('/api/register', fieldValues)

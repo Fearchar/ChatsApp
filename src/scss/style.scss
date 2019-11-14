@@ -12,6 +12,10 @@ body {
     height: 100%;
   }
 
+  textarea.textarea {
+    resize: none;
+  }
+
   #root main div.columns {
     height: 100%;
 
@@ -21,9 +25,8 @@ body {
     }
 
     div.scrolls.specify {
-      height: (99vh - $level-height);
+      height: (82vh - $level-height);
       overflow-y: scroll;
-
     }
   }
 }

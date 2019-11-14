@@ -7,8 +7,8 @@ import { Form, Field } from '../common/Form'
 import Auth from '../../lib/Auth'
 
 const Login = ({ history }) => {
-  const [ fieldValues, setFieldValues ] = useState(/* { fieldName: fieldValue, } */)
-  const [ fieldErrors, setFieldErrors ] = useState(/* { errorName: errorMessage } */)
+  const [ fieldValues, setFieldValues ] = useState(null) /* { fieldName: fieldValue, } */
+  const [ fieldErrors, setFieldErrors ] = useState(null) /* { errorName: errorMessage } */
 
   function attemptLogin() {
     axios.post('/api/login', fieldValues)

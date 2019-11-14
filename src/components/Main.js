@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import { Form, Field } from './common/Form'
 import Auth from '../lib/Auth'
-import ThreadPanel from './ThreadPanel'
+import ThreadPanel from './thread_panel/ThreadPanel'
 import { port } from '../../config/environment'
 import reducer from '../lib/reducer'
 

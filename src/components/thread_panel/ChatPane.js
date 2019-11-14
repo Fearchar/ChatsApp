@@ -2,9 +2,9 @@ import React from 'react'
 
 import Message from './Message'
 
-const ChatPane = ({ thread }) =>
+const ChatPane = ({ messages }) =>
   <div className="scrolls specify">
-    {thread && thread.messages.map(message =>
+    {messages && messages.map(message =>
       <Message key={message._id} {...message} />
     ).reverse()}
   </div>

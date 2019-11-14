@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Auth from '../lib/Auth'
+import Auth from '../../lib/Auth'
 
 const Message = ({ user, content, createdAt }) => {
   const isClient = Auth.isClient(user)
