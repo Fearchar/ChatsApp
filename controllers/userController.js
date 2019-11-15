@@ -15,7 +15,7 @@ function loginRoute(req, res, next) {
       if (
         !user ||
         !user.validatePassword(req.body.password)
-      ) return res.status(401).send({ errors: { email: 'Incorrect email or password.' } })
+      ) return res.status(401).json({ errors: { email: 'Incorrect email or password.' } })
       const token = jwt.sign({ sub: user._id }, secret, { expiresIn: '6h' })
       res.json({ token, message: `Welcome back to the conversation ${user.name}` })
     })
@@ -40,7 +40,7 @@ function updateRoute(req, res, next) {
     .then(user => {
       if (!user) return res.sendStatus(404)
       user.set(req.body)
-      user.save()
+      return user.save()
         .then(user => res.json(user))
     })
     .catch(next)
@@ -50,7 +50,7 @@ function deleteRoute(req, res, next) {
   User.findById(req.params.id)
     .then(user => {
       if (!user) return res.sendStatus(404)
-      user.remove()
+      return user.remove()
         .then(() => res.sendStatus(204))
     })
     .catch(next)

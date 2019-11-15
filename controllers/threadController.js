@@ -6,7 +6,7 @@ function createRoute(req, res, next) {
   Thread.create(req.body)
     .then(thread => {
       req.currentUser.threads.addToSet(thread)
-      req.currentUser.save()
+      return req.currentUser.save()
         .then(() => res.json(thread))
     })
     .catch(next)
@@ -23,7 +23,7 @@ function changeNameRoute(req, res, next) {
     .then(thread => {
       if (!thread) return res.sendStatus(404)
       thread.set(req.body.name)
-      thread.save()
+      return thread.save()
         .then(thread => res.json(thread))
     })
     .catch(next)
@@ -41,11 +41,11 @@ function changeUserStatusRoutes(req, res, next, changeTo = 'participant') {
   const changeFrom = changeTo === 'admin' ? 'participant' : 'admin'
   Thread.findById(req.params.id)
     .then(thread => {
-      User.findById(req.params.userId)
+      return User.findById(req.params.userId)
         .then(user => {
           if (!thread || !user) return res.sendStatus(404)
           user.threads.addToSet(req.params.id)
-          user.save()
+          return user.save()
             .then(user => {
               thread[`${changeFrom}s`].pull(user._id)
               thread[`${changeTo}s`].addToSet(user._id)
@@ -62,7 +62,7 @@ function removeUserRoutes(req, res, next, userType) {
     .then(thread => {
       if (!thread) return res.sendStatus(404)
       thread[`${userType}s`].pull(req.params.userId)
-      thread.save()
+      return thread.save()
         .then(thread => res.json(thread))
     })
     .catch(next)
@@ -80,7 +80,7 @@ function messageCreateRoute(req, res, next) {
       if (!thread) return res.sendStatus(404)
       if (!isThreadUser(thread, req.currentUser)) return res.sendStatus(401)
       thread.messages.addToSet(req.body)
-      thread.save()
+      return thread.save()
         .then(() => Thread.populate(thread, {
           path: 'messages.user',
           select: 'name _id'
@@ -104,7 +104,7 @@ function messageClearRoute(req, res, next) {
       ) return res.sendStatus(401)
       message.content = ''
       message.cleared = true
-      thread.save()
+      return thread.save()
         //!!! Should I be sending something back with a 204?
         .then(thread => res.json(thread).status(204))
     })

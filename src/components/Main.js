@@ -87,10 +87,7 @@ const Main = ({ history }) => {
           </div>
         </div>
         <div className="column is-8 card">
-          <ThreadPanel
-            thread={state.threads[0]}
-            addMessage={addMessage}
-          />
+          <ThreadPanel thread={state.threads[0]} />
         </div>
       </div>
     </main>

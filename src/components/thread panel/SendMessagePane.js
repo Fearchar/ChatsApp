@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import Auth from '../../lib/Auth'
 
-const SendMessagePane = ({ threadId, addMessage }) => {
+const SendMessagePane = ({ threadId }) => {
   const [ content, setContent ] = useState('')
   const [ errors, setErrors ] = useState({ content: '' }) /* { content: "errorMessage" } */
 
