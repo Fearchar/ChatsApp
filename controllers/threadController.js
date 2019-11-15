@@ -80,9 +80,15 @@ function messageCreateRoute(req, res, next) {
       if (!thread) return res.sendStatus(404)
       if (!isThreadUser(thread, req.currentUser)) return res.sendStatus(401)
       thread.messages.addToSet(req.body)
-      const message = thread.messages[thread.messages.length - 1]
       thread.save()
-        .then(thread => res.statusEmit('message:new', thread._id, message))
+        .then(() => Thread.populate(thread, {
+          path: 'messages.user',
+          select: 'name _id'
+        }))
+        .then(() => {
+          const message = thread.messages[thread.messages.length - 1]
+          res.statusEmit('message:new', thread._id, message)
+        })
     })
     .catch(next)
 }
@@ -99,6 +105,7 @@ function messageClearRoute(req, res, next) {
       message.content = ''
       message.cleared = true
       thread.save()
+        //!!! Should I be sending something back with a 204?
         .then(thread => res.json(thread).status(204))
     })
     .catch(next)

@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import { Form, Field } from './common/Form'
 import Auth from '../lib/Auth'
-import ThreadPanel from './thread_panel/ThreadPanel'
+import ThreadPanel from './thread panel/ThreadPanel'
 import { port } from '../../config/environment'
 import reducer from '../lib/reducer'
 
@@ -14,16 +14,12 @@ const Main = ({ history }) => {
     { threads: [], user: null }
   )
 
-  useEffect(() => {
-    function intiateSocket() {
-      const socket = io.connect(`http://localhost:${port}`)
-      socket.on('thread:leave', function leaveThread(thread) {
-        socket.emit('thread:leave', thread)
-      })
-      socket.on('message:new', addMessage)
-      return socket
-    }
+  function addMessage(threadId, message) {
+    console.log('message:new', message)
+    dispatch({ type: 'message:new', threadId, message })
+  }
 
+  useEffect(() => {
     function joinThreads(threads) {
       threads.forEach(thread => socket.emit('thread:join', thread._id))
     }
@@ -39,8 +35,14 @@ const Main = ({ history }) => {
         .catch(() => history.push('/login'))
     }
 
-    function addMessage(threadId, message) {
-      dispatch({ type: 'message:new', threadId, message })
+    function intiateSocket() {
+      const socket = io.connect(`http://localhost:${port}`)
+      socket.on('reconnect', getThreads)
+      socket.on('thread:leave', function leaveThread(thread) {
+        socket.emit('thread:leave', thread)
+      })
+      socket.on('message:new', addMessage)
+      return socket
     }
 
     const socket = intiateSocket()
@@ -77,14 +79,18 @@ const Main = ({ history }) => {
                 <p className="has-text-weight-bold">{thread.name}</p>
                 <p>{
                   thread.messages[0] ?
-                    `${lastMessage.user.name}: ${lastMessage.content.slice(0, 10)}` :
+                    `${lastMessage.user.name}: ${lastMessage.content.slice(0, 10)}`
+                    :
                     '...'}</p>
               </div>
             }).reverse()}
           </div>
         </div>
         <div className="column is-8 card">
-          <ThreadPanel thread={state.threads[0]}/>
+          <ThreadPanel
+            thread={state.threads[0]}
+            addMessage={addMessage}
+          />
         </div>
       </div>
     </main>

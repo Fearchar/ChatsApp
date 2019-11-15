@@ -15,7 +15,7 @@ function loginRoute(req, res, next) {
       if (
         !user ||
         !user.validatePassword(req.body.password)
-      ) return res.status(401).send({ email: 'Incorrect email or password.' })
+      ) return res.status(401).send({ errors: { email: 'Incorrect email or password.' } })
       const token = jwt.sign({ sub: user._id }, secret, { expiresIn: '6h' })
       res.json({ token, message: `Welcome back to the conversation ${user.name}` })
     })

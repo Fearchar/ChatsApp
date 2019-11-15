@@ -6,7 +6,7 @@ import { Form, Field } from '../common/Form'
 
 const Register = ({ history }) => {
   const [ fieldValues, setFieldValues ] = useState(null) /* { fieldName: fieldValue, } */
-  const [ fieldErrors, setFieldErrors ] = useState(null) /* { errorName: errorMessage } */
+  const [ fieldErrors, setFieldErrors ] = useState(null) /* { errorName: "errorMessage" } */
 
   function attemptRegister() {
     axios.post('/api/register', fieldValues)

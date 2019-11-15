@@ -8,7 +8,7 @@ import Auth from '../../lib/Auth'
 
 const Login = ({ history }) => {
   const [ fieldValues, setFieldValues ] = useState(null) /* { fieldName: fieldValue, } */
-  const [ fieldErrors, setFieldErrors ] = useState(null) /* { errorName: errorMessage } */
+  const [ fieldErrors, setFieldErrors ] = useState(null) /* { errorName: "errorMessage" } */
 
   function attemptLogin() {
     axios.post('/api/login', fieldValues)
@@ -16,10 +16,8 @@ const Login = ({ history }) => {
         Auth.setToken(res.data.token)
         history.push('/main')
       })
-      .catch(err => {
-        if (err.response.status === 401) return setFieldErrors({ email: 'Incorrect email or password.' })
-        return setFieldErrors(err.response.data.errors)
-      })
+      //!!! Unauthorized not setting properly
+      .catch(err => setFieldErrors(err.response.data.errors))
   }
 
   return (
