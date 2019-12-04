@@ -20,8 +20,8 @@ const SendMessagePane = ({ threadId }) => {
     })
       .catch(err => setErrors(err.response.data.errors))
   }
-  errors.content = errors[Object.keys(errors)[0]]
 
+  errors.content = errors[Object.keys(errors)[0]]
   //!!! I need to make it so that the spacing around the text area doesn't change when the help text is added
   return (
     <form
@@ -40,7 +40,8 @@ const SendMessagePane = ({ threadId }) => {
         {errors.content ?
           <p className="help is-danger">{errors.content}</p>
           :
-          <br />}
+          <br />
+        }
       </div>
       <div className="column is-2">
         <button className="button">send</button>

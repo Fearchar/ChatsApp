@@ -15,7 +15,6 @@ const Main = ({ history }) => {
   )
 
   function addMessage(threadId, message) {
-    console.log('message:new', message)
     dispatch({ type: 'message:new', threadId, message })
   }
 
@@ -51,7 +50,7 @@ const Main = ({ history }) => {
   }, [ history ])
 
   const { threads } = state
-  console.log('threads: ', threads)
+  
   return (
     <main>
       <div className="columns is-variable is-0">
@@ -77,11 +76,13 @@ const Main = ({ history }) => {
                 key={thread._id}
               >
                 <p className="has-text-weight-bold">{thread.name}</p>
-                <p>{
-                  thread.messages[0] ?
+                <p>
+                  {thread.messages[0] ?
                     `${lastMessage.user.name}: ${lastMessage.content.slice(0, 10)}`
                     :
-                    '...'}</p>
+                    '...'
+                  }
+                </p>
               </div>
             }).reverse()}
           </div>
