@@ -67,6 +67,14 @@ function userThreadIndexRoute(req, res, next) {
       })
     })
     .then(user => User.populate(user, {
+      path: 'threads.admins',
+      select: 'name'
+    }))
+    .then(user => User.populate(user, {
+      path: 'threads.participants',
+      select: 'name'
+    }))
+    .then(user => User.populate(user, {
       path: 'threads.messages.user',
       select: 'name'
     }))
