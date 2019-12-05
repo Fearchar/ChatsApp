@@ -28,7 +28,7 @@ const SendMessagePane = ({ threadId }) => {
       className="level card"
       onSubmit={sendMessage}
     >
-      <div className="column is-11">
+      <div className="column is-10">
         <textarea
           ref={contentRef}
           className="textarea"
@@ -43,7 +43,7 @@ const SendMessagePane = ({ threadId }) => {
           <br />
         }
       </div>
-      <div className="column is-2">
+      <div className="column is-2 has-text-centered">
         <button className="button">send</button>
       </div>
     </form>
