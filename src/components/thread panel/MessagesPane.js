@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react'
 
 import Message from './Message'
 
-const ChatPane = ({ messages }) => {
+const MessagesPane = ({ messages }) => {
   const scrollDummyRef = useRef(null)
   useEffect(() => {
     scrollDummyRef.current.scrollIntoView()
@@ -21,4 +21,4 @@ const ChatPane = ({ messages }) => {
   )
 }
 
-export default ChatPane
+export default MessagesPane

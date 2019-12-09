@@ -1,3 +1,6 @@
+@charset "utf-8";
+@import "../../node_modules/bulma/bulma.sass";
+
 $level-height: 7vh;
 
 * {
@@ -15,6 +18,20 @@ body {
   textarea.textarea {
     resize: none;
   }
+
+  div.box.is-primary, div.box.is-info {
+    color: $text-invert;
+
+    &.is-primary {
+      background-color: $primary;
+    }
+
+    &.is-info {
+      background-color: $info;
+    }
+
+  }
+
 
   #root main div.columns {
     height: 100%;

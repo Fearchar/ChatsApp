@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom'
-import 'bulma'
+// import 'bulma'
 import './scss/style.scss'
 
 import Main from './components/Main'

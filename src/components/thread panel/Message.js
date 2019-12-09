@@ -8,7 +8,7 @@ const Message = ({ user, content, createdAt }) => {
     <div className="level">
       {isClient && <div className="level-left" />}
       <div className={`level-${isClient ? 'right' : 'left'}`}>
-        <div className="box">
+        <div className={`box ${isClient ? 'is-primary' : 'is-info'}`}>
           <p>{user.name}</p>
           <p>{content}</p>
           <p className="has-text-right">{createdAt}</p>
