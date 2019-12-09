@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Auth from '../../lib/Auth'
+import formatDate from '../../lib/formatDate'
 
 const Message = ({ user, content, createdAt }) => {
   const isClient = Auth.isClient(user)
@@ -11,7 +12,7 @@ const Message = ({ user, content, createdAt }) => {
         <div className={`box ${isClient ? 'is-primary' : 'is-info'}`}>
           <p>{user.name}</p>
           <p>{content}</p>
-          <p className="has-text-right">{createdAt}</p>
+          <p className="has-text-right">{formatDate(createdAt)}</p>
         </div>
       </div>
     </div>
