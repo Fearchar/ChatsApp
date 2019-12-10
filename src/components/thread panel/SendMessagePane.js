@@ -28,7 +28,7 @@ const SendMessagePane = ({ threadId }) => {
       })
   }
 
-  function handelEnter(e) {
+  function handleEnter(e) {
     if (e.key === 'Enter' && !e.shiftKey) sendMessage(e)
   }
 
@@ -49,7 +49,7 @@ const SendMessagePane = ({ threadId }) => {
           rows="4"
           placeholder="Type message"
           onChange={handleChange}
-          onKeyPress={handelEnter}
+          onKeyPress={handleEnter}
         />
         {errors.content ?
           <p className="help is-danger">{errors.content}</p>
