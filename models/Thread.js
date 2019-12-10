@@ -26,7 +26,9 @@ const threadSchema = new mongoose.Schema(
 )
 
 messageSchema.pre('validate', function checkContent(next) {
-  if (!this.cleared && !this.content) {
+  const isContentEmpty = (!this.cleared && !this.content) || !this.content.replace(/ |\n/g, '')
+
+  if (isContentEmpty) {
     this.invalidate('content', 'Please provide message content.')
   }
   next()

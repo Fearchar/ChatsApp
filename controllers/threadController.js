@@ -1,5 +1,6 @@
 const Thread = require('../models/Thread')
 const User = require('../models/User')
+const cleanWhitespace = require('../lib/cleanWhitespace')
 
 function createRoute(req, res, next) {
   req.body.admins = [ req.currentUser._id ]
@@ -79,6 +80,7 @@ function messageCreateRoute(req, res, next) {
     .then(thread => {
       if (!thread) return res.sendStatus(404)
       if (!isThreadUser(thread, req.currentUser)) return res.sendStatus(401)
+      req.body.content = cleanWhitespace(req.body.content)
       thread.messages.addToSet(req.body)
       return thread.save()
         .then(() => Thread.populate(thread, {

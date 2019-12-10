@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom'
-// import 'bulma'
+import { ToastContainer } from 'react-toastify'
+
 import './scss/style.scss'
 
 import Main from './components/Main'
@@ -12,6 +13,7 @@ import Register from './components/auth/Register'
 const App = () => {
   return (
     <HashRouter>
+      <ToastContainer position="bottom-right" hideProgressBar={true} />
       <Switch>
         <Route path="/main" component={Main} />
         <Route path="/login" component={Login} />

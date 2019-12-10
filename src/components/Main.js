@@ -1,6 +1,7 @@
 import React, { useReducer, useEffect } from 'react'
 import io from 'socket.io-client'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 import { Form, Field } from './common/Form'
 import Auth from '../lib/Auth'
@@ -30,8 +31,12 @@ const Main = ({ history }) => {
           dispatch({ type: 'thread:index', threads })
           joinThreads(threads)
         })
-        // !!! push to an error page?
-        .catch(() => history.push('/login'))
+        /* !!!
+        This error is being handeled by the 2nd useEffect:
+          - Is there a more elegent approach?
+          - I need the catch block to stop the uncaught promise rejection, but what should I do with it?
+        */
+        .catch(() => console.log('Warning: Unable to retrieve user threads'))
     }
 
     function intiateSocket() {
@@ -49,8 +54,22 @@ const Main = ({ history }) => {
     return () => socket.disconnect()
   }, [ history ])
 
+  useEffect(() => {
+    if (!Auth.isAuthenticated()) {
+      history.push('/login')
+      toast.error('You are not logged in or your session has expired.')
+    }
+  })
+
+  //!!! Remove below at appropriate time
+
   const { threads } = state
-  
+
+  /*!!!
+    Render Notes:
+
+  */
+
   return (
     <main>
       <div className="columns is-variable is-0">

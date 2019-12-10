@@ -10,19 +10,32 @@ const SendMessagePane = ({ threadId }) => {
 
   function handleChange({ target }) {
     setContent(target.value)
+    setErrors({ content: '' })
   }
 
   function sendMessage(e) {
     e.preventDefault()
     contentRef.current.value = ''
+    setContent('')
+
     axios.post(`api/threads/${threadId}/messages`, { content }, {
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
     })
-      .catch(err => setErrors(err.response.data.errors))
+      .catch(err => {
+        const errors = err.response.data.errors
+        const content = errors[Object.keys(errors)[0]]
+        setErrors({ content })
+      })
   }
 
-  errors.content = errors[Object.keys(errors)[0]]
-  //!!! I need to make it so that the spacing around the text area doesn't change when the help text is added
+  function handelEnter(e) {
+    if (e.key === 'Enter' && !e.shiftKey) sendMessage(e)
+  }
+
+  /* !!!
+    Render Notes:
+      - I need to make it so that the spacing around the text area doesn't change when the help text is added
+  */
   return (
     <form
       className="level card"
@@ -36,6 +49,7 @@ const SendMessagePane = ({ threadId }) => {
           rows="4"
           placeholder="Type message"
           onChange={handleChange}
+          onKeyPress={handelEnter}
         />
         {errors.content ?
           <p className="help is-danger">{errors.content}</p>

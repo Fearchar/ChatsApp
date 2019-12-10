@@ -1,4 +1,4 @@
-function threadsReducer(state, action) {
+function reducer(state, action) {
   const threads = [ ...state.threads ]
 
   function threadIndex(threadId) {
@@ -36,4 +36,4 @@ function threadsReducer(state, action) {
   }
 }
 
-export default threadsReducer
+export default reducer
