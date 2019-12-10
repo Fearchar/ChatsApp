@@ -3,9 +3,9 @@ import io from 'socket.io-client'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
-import { Form, Field } from './common/Form'
 import Auth from '../lib/Auth'
 import ThreadPanel from './thread panel/ThreadPanel'
+import UserPanel from './user panel/UserPanel'
 import { port } from '../../config/environment'
 import reducer from '../lib/reducer'
 
@@ -65,7 +65,7 @@ const Main = ({ history }) => {
 
   const { threads } = state
 
-  /*!!!
+  /*
     Render Notes:
 
   */
@@ -74,37 +74,7 @@ const Main = ({ history }) => {
     <main>
       <div className="columns is-variable is-0">
         <div className="column is-4 card">
-          <div className="level card">
-            <div className="level-left" />
-            <div className="level-right top-bar">
-              <figure className="level-item image is-48x48 is-round">
-                <img className="is-rounded" src="https://www.fillmurray.com/300/200" alt="Placeholder image" />
-              </figure>
-              <i className="far fa-edit fa-2x"></i>
-              <i className="fas fa-chevron-down fa-2x"></i>
-            </div>
-          </div>
-          <div>
-            <Form fields={[ new Field('', 'text', 'Search') ]} />
-          </div>
-          <div className="card scrolls">
-            {threads && threads.map(thread => {
-              const lastMessage = thread.messages[thread.messages.length - 1]
-              return <div
-                className="box"
-                key={thread._id}
-              >
-                <p className="has-text-weight-bold">{thread.name}</p>
-                <p>
-                  {thread.messages[0] ?
-                    `${lastMessage.user.name}: ${lastMessage.content.slice(0, 10)}`
-                    :
-                    '...'
-                  }
-                </p>
-              </div>
-            }).reverse()}
-          </div>
+          <UserPanel threads={threads} />
         </div>
         <div className="column is-8 card">
           <ThreadPanel thread={state.threads[0]} />
