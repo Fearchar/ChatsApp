@@ -1,14 +1,19 @@
 import React from 'react'
 
-const ThreadBox = ({ thread }) => {
-  const lastMessage = thread.messages[thread.messages.length - 1]
+import lastItem from '../../lib/lastItem'
+
+const ThreadBox = ({ thread, setFocusThread }) => {
+  const lastMessage = lastItem(thread.messages)
 
   return (
-    <div className="box" >
+    <div
+      className="box"
+      onClick={() => setFocusThread(thread)}
+    >
       <p className="has-text-weight-bold">{thread.name}</p>
       <p>
         {thread.messages.length ?
-          `${lastMessage.user.name}: ${lastMessage.content.slice(0, 10)}`
+          `${lastMessage.user.name}: ${lastMessage.content.slice(0, 20)}...`
           :
           '...'
         }

@@ -33,7 +33,6 @@ const SendMessagePane = ({ threadId }) => {
   }
 
   /* !!!
-    Render Notes:
       - I need to make it so that the spacing around the text area doesn't change when the help text is added
   */
   return (

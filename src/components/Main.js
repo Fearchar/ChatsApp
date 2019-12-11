@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react'
+import React, { useReducer, useState, useEffect } from 'react'
 import io from 'socket.io-client'
 import axios from 'axios'
 import { toast } from 'react-toastify'
@@ -14,22 +14,21 @@ const Main = ({ history }) => {
     reducer,
     { threads: [], user: null }
   )
+  const [ focusThread, setFocusThread ] = useState(null)
 
-  function addMessage(threadId, message) {
-    dispatch({ type: 'message:new', threadId, message })
-  }
-
-  useEffect(() => {
-    function joinThreads(threads) {
+  useEffect(function initiateMain() {
+    function joinThreads(threads, socket) {
       threads.forEach(thread => socket.emit('thread:join', thread._id))
     }
 
-    function getThreads() {
+    function getThreads(socket) {
       axios.get(`/api/users/${Auth.getClientId()}/threads`)
         .then(res => {
           const threads = res.data.threads
+
           dispatch({ type: 'thread:index', threads })
-          joinThreads(threads)
+          setFocusThread(threads[0])
+          joinThreads(threads, socket)
         })
         /* !!!
         This error is being handeled by the 2nd useEffect:
@@ -39,45 +38,49 @@ const Main = ({ history }) => {
         .catch(() => console.log('Warning: Unable to retrieve user threads'))
     }
 
+    function addMessage(threadId, message) {
+      dispatch({ type: 'message:new', threadId, message })
+    }
+
     function intiateSocket() {
       const socket = io.connect(`http://localhost:${port}`)
+
       socket.on('reconnect', getThreads)
       socket.on('thread:leave', function leaveThread(thread) {
         socket.emit('thread:leave', thread)
       })
       socket.on('message:new', addMessage)
+
       return socket
     }
 
     const socket = intiateSocket()
-    getThreads()
+    getThreads(socket)
+
     return () => socket.disconnect()
   }, [ history ])
 
-  useEffect(() => {
+  useEffect(function ejectUnauthenticated() {
     if (!Auth.isAuthenticated()) {
       history.push('/login')
       toast.error('You are not logged in or your session has expired.')
     }
   })
 
-  //!!! Remove below at appropriate time
-
+  //!!! Remove / move below at appropriate time
   const { threads } = state
-
-  /*
-    Render Notes:
-
-  */
 
   return (
     <main>
       <div className="columns is-variable is-0">
         <div className="column is-4 card">
-          <UserPanel threads={threads} />
+          <UserPanel
+            threads={threads}
+            setFocusThread={setFocusThread}
+          />
         </div>
         <div className="column is-8 card">
-          <ThreadPanel thread={state.threads[0]} />
+          <ThreadPanel thread={focusThread} />
         </div>
       </div>
     </main>

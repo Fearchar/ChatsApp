@@ -1,9 +1,11 @@
 import React from 'react'
 
+import lastItem from '../../lib/lastItem'
+
 const ThreadTopBar = ({ _id, name, admins, participants }) => {
   const threadUsers = _id && [ ...admins, ...participants ]
-  const usersStr = _id && threadUsers.map((user, i) =>
-    i !== threadUsers.length - 1 ? `${user.name},` : user.name
+  const usersStr = threadUsers && threadUsers.map(user =>
+    user !== lastItem(threadUsers) ? `${user.name},` : user.name
   ).join(' ')
 
   return (
