@@ -41,8 +41,8 @@ body {
       height: $level-height;
       margin: 0;
     }
-    //!!! change class name or change functionality
-    div.scrolls.specify {
+    /// !!! Can the height be set on each column and then the scroll panes seperately?
+    div.scrolls {
       height: (79vh - $level-height);
       overflow-y: scroll;
     }

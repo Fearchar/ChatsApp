@@ -9,7 +9,7 @@ const MessagesPane = ({ messages }) => {
   })
 
   return (
-    <div className="scrolls specify">
+    <div className="scrolls">
       {messages && messages.map(message =>
         <Message
           key={message._id}

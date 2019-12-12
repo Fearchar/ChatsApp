@@ -77,12 +77,10 @@ const Main = ({ history }) => {
         <div className="column is-4 card">
           <UserPanel
             threads={threads}
+            focusThread={focusThread}
             setFocusThread={setFocusThread}
           />
         </div>
-        <button className="button" onClick={() => {
-          // new Promi
-        }} />
         <div className="column is-8 card">
           <ThreadPanel thread={focusThread} />
         </div>

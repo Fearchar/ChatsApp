@@ -5,7 +5,7 @@ import ThreadBox from './ThreadBox'
 import { Form, Field } from '../common/Form'
 import lastItem from '../../lib/lastItem'
 
-const ThreadsPanel = ({ threads, setFocusThread }) => {
+const ThreadsPanel = ({ threads, focusThread, setFocusThread }) => {
   function lastMessageSort(array) {
 
     return array.sort((threadA, threadB) => {
@@ -26,6 +26,7 @@ const ThreadsPanel = ({ threads, setFocusThread }) => {
           <ThreadBox
             key={thread._id}
             thread={thread}
+            isFocus={thread === focusThread}
             setFocusThread={setFocusThread}
           />
         )}

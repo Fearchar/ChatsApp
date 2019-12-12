@@ -2,12 +2,12 @@ import React from 'react'
 
 import lastItem from '../../lib/lastItem'
 
-const ThreadBox = ({ thread, setFocusThread }) => {
+const ThreadBox = ({ thread, isFocus, setFocusThread }) => {
   const lastMessage = lastItem(thread.messages)
 
   return (
     <div
-      className="box"
+      className={`box ${isFocus ? 'is-info' : ''}`}
       onClick={() => setFocusThread(thread)}
     >
       <p className="has-text-weight-bold">{thread.name}</p>
