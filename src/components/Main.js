@@ -17,6 +17,7 @@ const Main = ({ history }) => {
   const [ focusThread, setFocusThread ] = useState(null)
 
   useEffect(function initiateMain() {
+
     function joinThreads(threads, socket) {
       threads.forEach(thread => socket.emit('thread:join', thread._id))
     }
@@ -25,17 +26,20 @@ const Main = ({ history }) => {
       axios.get(`/api/users/${Auth.getClientId()}/threads`)
         .then(res => {
           const threads = res.data.threads
-
           dispatch({ type: 'thread:index', threads })
           setFocusThread(threads[0])
           joinThreads(threads, socket)
         })
         /* !!!
         This error is being handeled by the 2nd useEffect:
-          - Is there a more elegent approach?
+          - Is this the right approach?
           - I need the catch block to stop the uncaught promise rejection, but what should I do with it?
         */
-        .catch(() => console.log('Warning: Unable to retrieve user threads'))
+        .catch(err => console.log(err))
+    }
+
+    function leaveThread(thread) {
+      socket.emit('thread:leave', thread)
     }
 
     function addMessage(threadId, message) {
@@ -45,17 +49,14 @@ const Main = ({ history }) => {
     function intiateSocket() {
       const socket = io.connect(`http://localhost:${port}`)
 
-      socket.on('reconnect', getThreads)
-      socket.on('thread:leave', function leaveThread(thread) {
-        socket.emit('thread:leave', thread)
-      })
+      socket.on('connect',() => getThreads(socket))
+      socket.on('thread:leave', leaveThread)
       socket.on('message:new', addMessage)
 
       return socket
     }
 
     const socket = intiateSocket()
-    getThreads(socket)
 
     return () => socket.disconnect()
   }, [ history ])
@@ -79,6 +80,9 @@ const Main = ({ history }) => {
             setFocusThread={setFocusThread}
           />
         </div>
+        <button className="button" onClick={() => {
+          // new Promi
+        }} />
         <div className="column is-8 card">
           <ThreadPanel thread={focusThread} />
         </div>
