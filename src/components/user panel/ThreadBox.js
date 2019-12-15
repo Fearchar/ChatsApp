@@ -1,6 +1,7 @@
 import React from 'react'
 
 import lastItem from '../../lib/lastItem'
+import formatDate from '../../lib/formatDate'
 
 const ThreadBox = ({ thread, isFocus, setFocusThread }) => {
   const lastMessage = lastItem(thread.messages)
@@ -17,6 +18,9 @@ const ThreadBox = ({ thread, isFocus, setFocusThread }) => {
           :
           '...'
         }
+      </p>
+      <p className="help has-text-right">
+        {thread.messages.length && formatDate(lastMessage.createdAt)}
       </p>
     </div>
   )

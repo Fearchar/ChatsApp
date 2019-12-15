@@ -5,7 +5,7 @@ import ThreadBox from './ThreadBox'
 import { Form, Field } from '../common/Form'
 import lastItem from '../../lib/lastItem'
 
-const ThreadsPanel = ({ threads, focusThread, setFocusThread }) => {
+const ThreadsPane = ({ threads, focusThread, setFocusThread }) => {
   const [ fields, setFields ] = useState({})
 
   function lastMessageSort(array) {
@@ -54,4 +54,4 @@ const ThreadsPanel = ({ threads, focusThread, setFocusThread }) => {
   )
 }
 
-export default ThreadsPanel
+export default ThreadsPane
