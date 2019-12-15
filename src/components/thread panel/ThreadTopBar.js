@@ -19,7 +19,7 @@ const ThreadTopBar = ({ _id, name, admins, participants }) => {
               alt="Placeholder image"
             />
           </figure>
-          <p className="level-item has-text-weight-bold">{name}</p>
+          <h2 className="level-item has-text-weight-bold">{name}</h2>
           <p className="level-item">{usersStr}</p>
         </div>}
     </div>

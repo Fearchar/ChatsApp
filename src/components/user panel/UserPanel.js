@@ -4,7 +4,7 @@ import UserTopBar from './UserTopBar'
 import ThreadsPane from './ThreadsPane'
 import NewThreadPane from './NewThreadPane'
 
-const UserPanel = ({ threads, focusThread, setFocusThread }) => {
+const UserPanel = ({ threads, contacts, focusThread, setFocusThread }) => {
   const [ display, setDisplay ] = useState('ThreadsPane')
 
   return (
@@ -17,7 +17,7 @@ const UserPanel = ({ threads, focusThread, setFocusThread }) => {
           setFocusThread={setFocusThread}
         />}
       {display === 'NewThreadPane' &&
-        <NewThreadPane />}
+        <NewThreadPane contacts={contacts}/>}
     </div>
   )
 }

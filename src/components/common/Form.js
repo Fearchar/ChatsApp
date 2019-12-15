@@ -49,7 +49,7 @@ const Form = ({
               onChange={handleChange}
             />
           </div>
-          {fieldErrors && <p className="help is-danger">{fieldErrors[field.name]}</p>}
+          {fieldErrors && <small className="help is-danger">{fieldErrors[field.name]}</small>}
         </div>
       )}
       {buttonName && <button className="button is-info">{buttonName}</button>}

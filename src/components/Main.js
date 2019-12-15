@@ -7,13 +7,10 @@ import Auth from '../lib/Auth'
 import ThreadPanel from './thread panel/ThreadPanel'
 import UserPanel from './user panel/UserPanel'
 import { port } from '../../config/environment'
-import reducer from '../lib/reducer'
+import userReducer from '../lib/userReducer'
 
 const Main = ({ history }) => {
-  const [ state, dispatch ] = useReducer(
-    reducer,
-    { threads: [], user: null }
-  )
+  const [ user, dispatch ] = useReducer(userReducer, { threads: [] })
   const [ focusThread, setFocusThread ] = useState(null)
 
   useEffect(function initiateMain() {
@@ -22,13 +19,13 @@ const Main = ({ history }) => {
       threads.forEach(thread => socket.emit('thread:join', thread._id))
     }
 
-    function getThreads(socket) {
+    function getUser(socket) {
       axios.get(`/api/users/${Auth.getClientId()}/threads`)
         .then(res => {
-          const threads = res.data.threads
-          dispatch({ type: 'thread:index', threads })
-          setFocusThread(threads[0])
-          joinThreads(threads, socket)
+          const user = res.data
+          dispatch({ type: 'user:index', user })
+          setFocusThread(user.threads[0])
+          joinThreads(user.threads, socket)
         })
         /* !!!
         This error is being handeled by the 2nd useEffect:
@@ -49,7 +46,7 @@ const Main = ({ history }) => {
     function intiateSocket() {
       const socket = io.connect(`http://localhost:${port}`)
 
-      socket.on('connect',() => getThreads(socket))
+      socket.on('connect',() => getUser(socket))
       socket.on('thread:leave', leaveThread)
       socket.on('message:new', addMessage)
 
@@ -68,15 +65,12 @@ const Main = ({ history }) => {
     }
   })
 
-  //!!! Remove / move below at appropriate time
-  const { threads } = state
-
   return (
     <main>
       <div className="columns is-variable is-0">
         <div className="column is-4 card">
           <UserPanel
-            threads={threads}
+            {...user}
             focusThread={focusThread}
             setFocusThread={setFocusThread}
           />

@@ -61,11 +61,16 @@ function userThreadIndexRoute(req, res, next) {
     .then(user => {
       if (!user) res.sendStatus(404)
       else return User.populate(user, {
-        path: 'threads',
-        modal: 'Thread',
-        select: 'name messages admins participants lastMessage lastMessageDate'
+        path: 'contacts',
+        modal: 'User',
+        select: 'name imgUrl'
       })
     })
+    .then(user => User.populate(user, {
+      path: 'threads',
+      modal: 'Thread',
+      select: 'name messages admins participants lastMessage lastMessageDate'
+    }))
     .then(user => User.populate(user, {
       path: 'threads.admins',
       select: 'name'

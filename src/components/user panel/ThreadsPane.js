@@ -21,13 +21,13 @@ const ThreadsPane = ({ threads, focusThread, setFocusThread }) => {
   }
 
   function filterThreads(threads, { search }) {
-    const re = new RegExp(search, 'i')
+    const regex = new RegExp(search, 'i')
 
     return !search ? threads : threads.filter(thread => {
       return (
-        re.test(thread.name) ||
-        thread.participants.some(p => re.test(p.name)) ||
-        thread.admins.some(a => re.test(a.name))
+        regex.test(thread.name) ||
+        thread.participants.some(p => regex.test(p.name)) ||
+        thread.admins.some(a => regex.test(a.name))
       )
     })
   }

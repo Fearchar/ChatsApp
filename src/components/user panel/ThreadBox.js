@@ -11,7 +11,7 @@ const ThreadBox = ({ thread, isFocus, setFocusThread }) => {
       className={`box ${isFocus ? 'is-info' : ''}`}
       onClick={() => setFocusThread(thread)}
     >
-      <p className="has-text-weight-bold">{thread.name}</p>
+      <h3 className="has-text-weight-bold">{thread.name}</h3>
       <p>
         {thread.messages.length ?
           `${lastMessage.user.name}: ${lastMessage.content.slice(0, 20)}...`
@@ -19,9 +19,8 @@ const ThreadBox = ({ thread, isFocus, setFocusThread }) => {
           '...'
         }
       </p>
-      <p className="help has-text-right">
-        {thread.messages.length && formatDate(lastMessage.createdAt)}
-      </p>
+      {lastMessage &&
+        <small className="help has-text-right">{formatDate(lastMessage.createdAt)}</small>}
     </div>
   )
 }
