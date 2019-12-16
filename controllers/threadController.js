@@ -2,14 +2,39 @@ const Thread = require('../models/Thread')
 const User = require('../models/User')
 const cleanWhitespace = require('../lib/cleanWhitespace')
 
+//!!! Use lessons learned in below to flatten all controllers in both files
+
 function createRoute(req, res, next) {
   req.body.admins = [ req.currentUser._id ]
+  let createdThread = null
+
   Thread.create(req.body)
     .then(thread => {
-      req.currentUser.threads.addToSet(thread)
-      return req.currentUser.save()
-        .then(() => res.json(thread))
+      createdThread = thread
+      req.currentUser.threads.addToSet(createdThread)
+
+      return Promise.all(req.body.participantIds.map(pId => User.findById(pId)))
     })
+    .then(participants => {
+      const savingUsers = []
+
+      for (const user of participants) {
+        if (!user) return res.sendStatus(404)
+        user.threads.addToSet(createdThread)
+        createdThread.participants.addToSet(user)
+
+        savingUsers.push(user.save())
+      }
+
+      return Promise.all(savingUsers)
+    })
+    .then(() => Promise.all([ req.currentUser.save(), createdThread.save() ]))
+    .then(thread => Thread.populate(thread, {
+      path: 'participants',
+      modal: User,
+      select: 'name'
+    }))
+    .then(thread => res.json(thread))
     .catch(next)
 }
 
