@@ -56,33 +56,39 @@ function deleteRoute(req, res, next) {
     .catch(next)
 }
 
+//!!! Change so below works on req.currentUser. You'll never need this info on anyone else. Change on front end too.
 function userThreadIndexRoute(req, res, next) {
-  User.findById(req.params.id).populate('threads.message')
+  User.findById(req.currentUser)
     .then(user => {
       if (!user) res.sendStatus(404)
-      else return User.populate(user, {
-        path: 'contacts',
-        modal: 'User',
-        select: 'name imgUrl'
-      })
+      else return User.populate(user, [
+        {
+          path: 'contacts',
+          modal: 'User',
+          select: 'name imgUrl'
+        },
+        {
+          path: 'threads',
+          modal: 'Thread',
+          select: 'name messages admins participants lastMessage lastMessageDate'
+        }
+      ])
     })
-    .then(user => User.populate(user, {
-      path: 'threads',
-      modal: 'Thread',
-      select: 'name messages admins participants lastMessage lastMessageDate'
-    }))
-    .then(user => User.populate(user, {
-      path: 'threads.admins',
-      select: 'name'
-    }))
-    .then(user => User.populate(user, {
-      path: 'threads.participants',
-      select: 'name'
-    }))
-    .then(user => User.populate(user, {
-      path: 'threads.messages.user',
-      select: 'name'
-    }))
+    .then(user => User.populate(user, [
+      {
+        path: 'threads.admins',
+        modal: 'User',
+        select: 'name'
+      }, {
+        path: 'threads.participants',
+        modal: 'User',
+        select: 'name'
+      }, {
+        path: 'threads.messages.user',
+        modal: 'User',
+        select: 'name'
+      }
+    ]))
     .then(user => res.json(user))
     .catch(next)
 }

@@ -2,7 +2,7 @@ const Thread = require('../models/Thread')
 const User = require('../models/User')
 const cleanWhitespace = require('../lib/cleanWhitespace')
 
-//!!! Use lessons learned in below to flatten all controllers in both files
+//!!! Use lessons learned in below to flatten all controllers in both
 
 function createRoute(req, res, next) {
   req.body.admins = [ req.currentUser._id ]
@@ -28,12 +28,20 @@ function createRoute(req, res, next) {
 
       return Promise.all(savingUsers)
     })
-    .then(() => Promise.all([ req.currentUser.save(), createdThread.save() ]))
-    .then(thread => Thread.populate(thread, {
-      path: 'participants',
-      modal: User,
-      select: 'name'
-    }))
+    .then(() => req.currentUser.save())
+    .then(() => createdThread.save())
+    .then(thread => Thread.populate(thread, [
+      {
+        path: 'participants',
+        modal: 'User',
+        select: 'name'
+      },
+      {
+        path: 'admins',
+        modal: 'User',
+        select: 'name'
+      }
+    ]))
     .then(thread => res.json(thread))
     .catch(next)
 }

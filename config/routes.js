@@ -5,12 +5,13 @@ const secureRoute = require('../lib/secureRoute')
 
 router.post('/register', userController.register)
 router.post('/login', userController.login)
+//!!! Remove userIndex route and controller for final version
 router.get('/users', userController.index)
 router.route('/users/:id')
   .get(userController.show)
   .put(userController.update)
   .delete(userController.delete)
-router.get('/users/:id/threads', userController.userThreadIndex)
+router.get('/userThreads', secureRoute, userController.userThreadIndex)
 
 router.post('/threads', secureRoute, threadController.create)
 router.route('/threads/:id')

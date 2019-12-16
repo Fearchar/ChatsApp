@@ -20,7 +20,9 @@ const Main = ({ history }) => {
     }
 
     function getUser(socket) {
-      axios.get(`/api/users/${Auth.getClientId()}/threads`)
+      axios.get('/api/userThreads',
+        { headers: { Authorization: `Bearer ${Auth.getToken()}` } }
+      )
         .then(res => {
           const user = res.data
           dispatch({ type: 'user:index', user })
