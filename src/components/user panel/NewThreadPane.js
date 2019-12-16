@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import { Form, Field } from '../common/Form'
 import ContactBox from './ContactBox'
+import Auth from '../../lib/Auth'
 
 const NewThreadPane = ({ threads, contacts }) => {
   const [ fields, setFields ] = useState({})
@@ -15,7 +16,11 @@ const NewThreadPane = ({ threads, contacts }) => {
     })
   }
 
-  function createThread(participants) {
+  function createThread(name, participants) {
+    const participantIds = participants.map(participant => participant._id)
+    const reqBody = { name, participantIds }
+
+    axios.post('/api/threads', reqBody, Auth.header)
   }
 
   //!!! should probably change name
