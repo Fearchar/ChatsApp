@@ -5,16 +5,16 @@ class Auth {
     return localStorage.getItem('token')
   }
 
+  static set token(token) {
+    localStorage.setItem('token', token)
+  }
+
   static get payload() {
     return jwt.decode(Auth.token)
   }
 
   static get header() {
     return { headers: { Authorization: `Bearer ${Auth.token}` } }
-  }
-
-  static setToken(token) {
-    localStorage.setItem('token', token)
   }
 
   static removeToken() {

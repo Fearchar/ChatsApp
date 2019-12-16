@@ -13,7 +13,7 @@ const Login = ({ history }) => {
   function attemptLogin() {
     axios.post('/api/login', fieldValues)
       .then(res => {
-        Auth.setToken(res.data.token)
+        Auth.token = res.data.token
         history.push('/main')
       })
       //!!! Unauthorized not setting properly
