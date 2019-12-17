@@ -7,19 +7,21 @@ function userReducer(user, action) {
 
   switch(action.type) {
     case 'user:index': {
+      
       return action.user
     }
-    // !!! Not yet using
-    // case 'thread:new': {
-    //   threads.push(action.thread)
-    //   return { threads, ...user }
-    // }
+
+    case 'thread:new': {
+      threads.push(action.thread)
+
+      return { ...user, threads }
+    }
 
     // !!! Probably no use case
     // case 'thread:index': {
     //   return { threads: action.threads, ...user }
     // }
-    
+
     // !!! Not yet using
     // case 'thread:delete': {
     //   threads.splice(threadIndex(action.thread), 1)
@@ -28,7 +30,8 @@ function userReducer(user, action) {
 
     case 'message:new': {
       threads[threadIndex(action.threadId)].messages.push(action.message)
-      return { threads, ...user }
+
+      return { ...user, threads }
     }
 
     default: {

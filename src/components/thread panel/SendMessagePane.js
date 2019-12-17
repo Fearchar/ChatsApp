@@ -18,9 +18,7 @@ const SendMessagePane = ({ threadId }) => {
     contentRef.current.value = ''
     setContent('')
 
-    axios.post(`api/threads/${threadId}/messages`, { content }, {
-      headers: { Authorization: `Bearer ${Auth.getToken()}` }
-    })
+    axios.post(`api/threads/${threadId}/messages`, { content }, Auth.header)
       .catch(err => {
         const errors = err.response.data.errors
         const content = errors[Object.keys(errors)[0]]

@@ -42,7 +42,7 @@ function createRoute(req, res, next) {
         select: 'name'
       }
     ]))
-    .then(thread => res.json(thread))
+    .then(thread => res.statusEmit('thread:new', null, thread))
     .catch(next)
 }
 

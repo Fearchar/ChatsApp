@@ -34,9 +34,14 @@ const Main = ({ history }) => {
         */
         .catch(err => console.log(err))
     }
+    //!!! Not in use yet
+    // function leaveThread(thread) {
+    //   socket.emit('thread:leave', thread)
+    // }
 
-    function leaveThread(thread) {
-      socket.emit('thread:leave', thread)
+    function addThread(thread, socket) {
+      joinThreads([ thread ], socket)
+      dispatch({ type: 'thread:new', thread })
     }
 
     function addMessage(threadId, message) {
@@ -47,7 +52,9 @@ const Main = ({ history }) => {
       const socket = io.connect(`http://localhost:${port}`)
 
       socket.on('connect',() => getUser(socket))
-      socket.on('thread:leave', leaveThread)
+      //!!! Not in use yet
+      // socket.on('thread:leave', leaveThread)
+      socket.on('thread:new', thread => addThread(thread, socket))
       socket.on('message:new', addMessage)
 
       return socket
