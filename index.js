@@ -14,7 +14,7 @@ const resStatusEmit = require('./lib/resStatusEmit')
 const router = require('./config/routes')
 const errorHandler = require('./lib/errorHandler')
 
-mongoose.connect(dbURI, { useNewUrlParser: true })
+mongoose.connect(dbURI, { useNewUrlParser: true,  useUnifiedTopology: true })
 app.use(express.static(`${__dirname}/dist`))
 app.use(bodyParser.json())
 app.use(morgan('tiny'))

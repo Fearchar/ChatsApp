@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "node ./db/seeds",
     "serve:frontend": "webpack-dev-server --mode=development",
     "serve:backend": "nodemon",
     "build": "webpack -p"
