@@ -28,16 +28,16 @@ const threadSchema = new mongoose.Schema(
 messageSchema.pre('validate', function checkContent(next) {
   const isContentEmpty = (!this.cleared && !this.content) || !this.content.replace(/ |\n/g, '')
 
-  if (isContentEmpty) {
-    this.invalidate('content', 'Please provide message content.')
-  }
+  if (isContentEmpty) this.invalidate('content', 'Please provide message content.')
   next()
 })
 
 threadSchema.pre('validate', function checkForAdmins(next) {
-  if (this.admins.length < 1) {
-    this.invalidate('admins', 'Thread requires at least one admin.')
-  }
+  if (
+    this.admins.length < 1 ||
+    this.admins.length + this.participants.length < 2
+  ) this.invalidate('users', 'Threads require at least one admin and at least 2 users.')
+  console.log(this.admins.length + this.participants.length, this.admins.length + this.participants.length < 2)
   next()
 })
 
