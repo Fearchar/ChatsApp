@@ -13,6 +13,11 @@ const Main = ({ history }) => {
   const [ user, dispatch ] = useReducer(userReducer, { threads: [] })
   const [ focusThread, setFocusThread ] = useState(null)
 
+  function ejectUser() {
+    history.push('/login')
+    toast.error('You are not logged in or your session has expired.')
+  }
+
   useEffect(function initiateMain() {
 
     function joinThreads(threads, socket) {
@@ -32,7 +37,7 @@ const Main = ({ history }) => {
           - Is this the right approach?
           - I need the catch block to stop the uncaught promise rejection, but what should I do with it?
         */
-        .catch(err => console.log(err))
+        .catch(() => ejectUser())
     }
     //!!! Not in use yet
     // function leaveThread(thread) {
@@ -67,8 +72,7 @@ const Main = ({ history }) => {
 
   useEffect(function ejectUnauthenticated() {
     if (!Auth.isAuthenticated()) {
-      history.push('/login')
-      toast.error('You are not logged in or your session has expired.')
+      ejectUser()
     }
   })
 

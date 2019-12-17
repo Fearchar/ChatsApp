@@ -7,7 +7,8 @@ function makeThreadData(users) {
       name: 'Seeded Thread1',
       messages: [
         {
-          content: 'First message'
+          content: 'First message',
+          user: userIds[0]
         }
       ]
     },
@@ -17,7 +18,8 @@ function makeThreadData(users) {
       name: 'Seeded Thread2',
       messages: [
         {
-          content: 'First message'
+          content: 'First message',
+          user: userIds[0]
         }
       ]
     }

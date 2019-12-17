@@ -3,12 +3,11 @@ import ReactDOM from 'react-dom'
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 
-import './scss/style.scss'
-
 import Main from './components/Main'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 
+import './scss/style.scss'
 
 const App = () => {
   return (
