@@ -29,9 +29,19 @@ const threadHelper = (function () {
   return { createThreads, addThreadsToUsers }
 })()
 
+function linkUsers(users) {
+  for (let i = 0; i < users.length; i += 2) {
+    users[i].contacts.addToSet(users[i + 1])
+    users[i + 1].contacts.addToSet(users[i])
+  }
+
+  return Promise.all([ ...users.map(user => user.save()) ])
+}
+
 mongoose.connect(dbURI, { useNewUrlParser: true,  useUnifiedTopology: true })
   .then(() => mongoose.connection.db.dropDatabase())
   .then(() => User.create(userData))
+  .then(users => linkUsers(users))
   .then(threadHelper.createThreads)
   .then(threadHelper.addThreadsToUsers)
   .then(() => console.log('db: Sucessfully seeded'))
