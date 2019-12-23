@@ -1,6 +1,6 @@
 import React from 'react'
 
-const UserTopBar = ({ setDisplay }) =>
+const UserTopBar = ({ setRoute }) =>
   <div className="level card">
     <div className="level-left" />
     <div className="level-right top-bar">
@@ -9,9 +9,12 @@ const UserTopBar = ({ setDisplay }) =>
       </figure>
       <i
         className="far fa-edit fa-2x"
-        onClick={() => setDisplay('NewThreadPane')}
+        onClick={() => setRoute({ path: 'NewThreadPane' })}
       />
-      <i className="fas fa-chevron-down fa-2x" />
+      <i
+        className="fas fa-chevron-down fa-2x"
+        onClick={() => setRoute({ path: 'NewThreadPane', additonalProps: { itsMe: 'itsme' } })}
+      />
     </div>
   </div>
 
