@@ -1,12 +1,10 @@
 import React from 'react'
 
-import lastItem from '../../lib/lastItem'
+import usersString from '../../lib/usersString'
 
 const ThreadTopBar = ({ _id, name, admins, participants }) => {
   const threadUsers = _id && [ ...admins, ...participants ]
-  const usersStr = threadUsers && threadUsers.map(user =>
-    user !== lastItem(threadUsers) ? `${user.name},` : user.name
-  ).join(' ')
+  const usersStr = threadUsers && usersString(threadUsers)
 
   return (
     <div className="level card top-bar">

@@ -17,7 +17,7 @@ const UserPanel = ({ threads, contacts, focusThread, setFocusThread }) => {
           setFocusThread={setFocusThread}
         />}
       {display === 'NewThreadPane' &&
-        <NewThreadPane contacts={contacts}/>}
+        <NewThreadPane contacts={contacts} />}
     </div>
   )
 }

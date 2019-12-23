@@ -13,6 +13,11 @@ const Main = ({ history }) => {
   const [ user, dispatch ] = useReducer(userReducer, { threads: [] })
   const [ focusThread, setFocusThread ] = useState(null)
 
+  /*!!!
+  The hooks linter wants you to include ejectUser in the dependencies, but when you do
+  it tells you that it's going change on every re-render, and that you should use the
+  useCallback hook. Investigate.
+  */
   function ejectUser() {
     history.push('/login')
     toast.error('You are not logged in or your session has expired.')

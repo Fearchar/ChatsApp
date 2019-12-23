@@ -32,7 +32,7 @@ messageSchema.pre('validate', function checkContent(next) {
   next()
 })
 
-threadSchema.pre('validate', function checkForAdmins(next) {
+threadSchema.pre('validate', function checkUsers(next) {
   if (
     this.admins.length < 1 ||
     this.admins.length + this.participants.length < 2

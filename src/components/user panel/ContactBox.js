@@ -1,7 +1,14 @@
 import React from 'react'
 
-const ContactBox = ({ imgUrl, name }) =>
-  <div className="level box">
+const ContactBox = ({
+  contact, contact: { name, imgUrl },
+  isParticipant,
+  toggleContactInclusion
+}) =>
+  <div
+    className={`level box ${isParticipant ? 'is-info' : ''}`}
+    onClick={() => toggleContactInclusion(contact)}
+  >
     <div className="level-left">
       <figure className="level-item image is-48x48 is-round">
         <img

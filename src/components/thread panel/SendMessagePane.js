@@ -21,7 +21,6 @@ const SendMessagePane = ({ threadId }) => {
     //!!! Need to eject unauthorised users.
     axios.post(`api/threads/${threadId}/messages`, { content }, Auth.header)
       .catch(err => {
-        console.log(err)
         const errors = err.response.data.errors
         const content = errors[Object.keys(errors)[0]]
         setErrors({ content })

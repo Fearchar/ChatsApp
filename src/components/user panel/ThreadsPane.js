@@ -36,7 +36,6 @@ const ThreadsPane = ({ threads, focusThread, setFocusThread }) => {
     <div>
       <Form
         hasBox={true}
-        buttonName="Search"
         fields={[ new Field('', 'text', 'Search', 'search') ]}
         fieldSetter={setFields}
       />
