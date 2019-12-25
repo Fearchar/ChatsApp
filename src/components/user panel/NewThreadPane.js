@@ -40,7 +40,7 @@ const NewThreadPane = ({ contacts }) => {
   }
 
   return (
-    <div>
+    <>
       <Form
         title="New Group"
         hasBox={true}
@@ -71,7 +71,7 @@ const NewThreadPane = ({ contacts }) => {
               toggleContactInclusion={toggleContactInclusion}
             />)}
       </div>
-    </div>
+    </>
   )
 }
 

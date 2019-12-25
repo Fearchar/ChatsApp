@@ -2,46 +2,71 @@ import React, { useState } from 'react'
 
 import lastItem from '../../lib/lastItem'
 
-class Pane {
-  constructor(path, Element) {
-    this.path = path
-    this.Element = Element
+const history = []
+
+const PaneRouter = ({ children }) => {
+  const [ route, setRoute ] = useState({ name: null }) // { name: str, additonalProps }
+
+  function goBack() {
+    history.pop()
+    setRoute(lastItem(history))
   }
+
+  function goHome() {
+    history.splice(0)
+    setRoute({ name: null })
+  }
+
+  //!!! Make useRoute custom hook which also handels history?
+  function getRouterProps(children) {
+    let routerChildren = children ? React.Children.toArray(children) : null
+
+    routerChildren = routerChildren && routerChildren
+      .map(child => React.cloneElement(child, { getRouterProps }))
+
+    return {
+      routerChildren,
+      route,
+      setRoute,
+      goBack,
+      goHome
+    }
+  }
+
+  const { routerChildren } = getRouterProps(children)
+
+  return (
+    <>{routerChildren}</>
+  )
 }
 
-const history = []
-let setRoute = null
+const Switch = ({ children, getRouterProps }) => {
+  const { routerChildren, route, goBack } = getRouterProps(children)
 
-const PaneRouter = ({ panes }) => {
-  let route = null
-  ;[ route, setRoute ] = useState({ path: null }) // { path: str, additonalProps }
-
-  function generatePaneElement() {
+  function makePane() {
     let Element = null
-    let path = null
+    let name = null
 
-    for (const pane of panes) {
-      if (route.path === pane.path) {
-        ({ Element, path } = pane)
+    for (const Pane of routerChildren) {
+      if (route.name === Pane.type.name) {
+        Element = Pane, name = Pane.type.name
         break
       }
     }
 
-    Element = Element || panes[0].Element
-    path = path || panes[0].path
-    if (!history.length || lastItem(history).path !== path) history.push({ path, additionalProps: route.additonalProps })
+    Element = Element || routerChildren[0]
+    console.log()
+    name = name || routerChildren[0].type.name
+    if (!history.length || lastItem(history).name !== name) {
+      history.push({ name, additionalProps: route.additonalProps })
+    }
 
-    return () => React.cloneElement(Element, { ...route.additonalProps })
+    const Pane = () => React.cloneElement(Element, { ...route.additonalProps })
+
+    return Pane
   }
 
-  function goBack() {
-    history.pop()
-    setRoute({ ...history[0] })
-    console.log('goBack', history)
-  }
-
-  const PaneElement = generatePaneElement()
-  console.log(history)
+  const Pane = makePane()
 
   return (
     <div
@@ -52,9 +77,9 @@ const PaneRouter = ({ panes }) => {
           className="fas fa-chevron-left"
           onClick={goBack}
         />}
-      <PaneElement />
+      <Pane />
     </div>
   )
 }
 
-export { Pane, PaneRouter, setRoute }
+export { PaneRouter, Switch }

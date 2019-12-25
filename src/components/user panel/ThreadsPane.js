@@ -33,7 +33,7 @@ const ThreadsPane = ({ threads, focusThread, setFocusThread }) => {
   }
 
   return (
-    <div>
+    <>
       <Form
         hasBox={true}
         fields={[ new Field('', 'text', 'Search', 'search') ]}
@@ -49,7 +49,7 @@ const ThreadsPane = ({ threads, focusThread, setFocusThread }) => {
               setFocusThread={setFocusThread}
             />)}
       </div>
-    </div>
+    </>
   )
 }
 
