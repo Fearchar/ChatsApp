@@ -13,7 +13,7 @@ function createRoute(req, res, next) {
       createdThread = thread
       req.currentUser.threads.addToSet(createdThread)
 
-      return Promise.all(req.body.participantIds.map(pId => User.findById(pId)))
+      return Promise.all(req.body.participants.map(pId => User.findById(pId)))
     })
     .then(participants => {
       const savingUsers = []

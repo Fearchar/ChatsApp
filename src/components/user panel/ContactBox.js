@@ -11,6 +11,7 @@ const ContactBox = ({
   >
     <div className="level-left">
       <figure className="level-item image is-48x48 is-round">
+        {/* !!! Change stock photo for users without img */}
         <img
           className="is-rounded"
           src={imgUrl || 'https://www.fillmurray.com/300/200'}

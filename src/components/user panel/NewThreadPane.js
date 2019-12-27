@@ -27,7 +27,7 @@ const NewThreadPane = ({ contacts }) => {
   function createThread() {
     const participantIds = participants.map(participant => participant._id)
     const name = fields.name
-    const reqBody = { name, participantIds }
+    const reqBody = { name, participants: participantIds }
 
     axios.post('/api/threads', reqBody, Auth.header)
       .catch(err => setErrors(err.response.data.errors))
@@ -51,7 +51,10 @@ const NewThreadPane = ({ contacts }) => {
         ]}
         fieldSetter={setFields}
         fieldErros={errors}
-      />
+        onSubmit={createThread}
+      >
+        {errors && errors.users && <p className="help is-danger">{errors.users}</p>}
+      </Form>
 
       <div className="box">
         <h3 className="has-text-weight-bold">Group participants</h3>

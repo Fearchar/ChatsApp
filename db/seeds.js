@@ -30,10 +30,13 @@ const threadHelper = (function () {
 })()
 
 function linkUsers(users) {
-  for (let i = 0; i < users.length; i += 2) {
-    users[i].contacts.addToSet(users[i + 1])
-    users[i + 1].contacts.addToSet(users[i])
-  }
+  users.forEach(userA => {
+    users.forEach(userB => {
+      if (userA.name !== userB.name) {
+        userA.contacts.addToSet(userB)
+      }
+    })
+  })
 
   return Promise.all([ ...users.map(user => user.save()) ])
 }

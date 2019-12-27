@@ -16,10 +16,10 @@ const Form = ({
   hasBox,
   buttonName,
   fields,
+  children,
   fieldErrors,
   fieldSetter,
-  onSubmit,
-  children
+  onSubmit
 }) => {
   function handleChange({ target }) {
     fieldSetter(fields => ({ ...fields, [target.name]: target.value }))
