@@ -40,30 +40,38 @@ const PaneRouter = ({ children }) => {
   )
 }
 
-const Switch = ({ children, getRouterProps }) => {
+const Routes = ({ children, getRouterProps }) => {
   const { routerChildren, route, goBack } = getRouterProps(children)
 
-  function makePane() {
-    let Element = null
-    let name = null
+  function routerSwitch(routerChildren, route) {
+    let Pane = null
+    let paneName = null
 
-    for (const Pane of routerChildren) {
-      if (route.name === Pane.type.name) {
-        Element = Pane, name = Pane.type.name
+    for (const Element of routerChildren) {
+      if (route.name === Element.type.name) {
+        Pane = Element, paneName = Element.type.name
         break
       }
     }
 
-    Element = Element || routerChildren[0]
-    console.log()
-    name = name || routerChildren[0].type.name
-    if (!history.length || lastItem(history).name !== name) {
-      history.push({ name, additionalProps: route.additonalProps })
+    Pane = Pane || lastItem(routerChildren)
+    paneName = paneName || lastItem(routerChildren).type.name
+
+    return { Pane, paneName }
+  }
+
+  function addPaneToHistory(history, paneName, additionalProps) {
+    if (!history.length || lastItem(history).name !== paneName) {
+      history.push({ name: paneName, additionalProps })
     }
+  }
 
-    const Pane = () => React.cloneElement(Element, { ...route.additonalProps })
+  function makePane() {
+    const { Pane, paneName } = routerSwitch(routerChildren, route)
 
-    return Pane
+    addPaneToHistory(history, paneName, route.additonalProps)
+
+    return () => React.cloneElement(Pane, { ...route.additonalProps })
   }
 
   const Pane = makePane()
@@ -82,4 +90,4 @@ const Switch = ({ children, getRouterProps }) => {
   )
 }
 
-export { PaneRouter, Switch }
+export { PaneRouter, Routes }

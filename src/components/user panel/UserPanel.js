@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { PaneRouter, Switch } from '../common/PaneRouter'
+import { PaneRouter, Routes } from '../common/PaneRouter'
 import UserTopBar from './UserTopBar'
 import ThreadsPane from './ThreadsPane'
 import NewThreadPane from './NewThreadPane'
@@ -12,15 +12,14 @@ const UserPanel = ({ threads, contacts, focusThread, setFocusThread }) => {
     <>
       <PaneRouter>
         <UserTopBar />
-        <Switch>
+        <Routes>
+          <NewThreadPane contacts={contacts} />
           <ThreadsPane
             threads={threads}
             focusThread={focusThread}
             setFocusThread={setFocusThread}
           />
-          <NewThreadPane contacts={contacts} />
-          <ThreadBox thread={threads[0]}/>
-        </Switch>
+        </Routes>
       </PaneRouter>
     </>
   )
