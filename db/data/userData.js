@@ -22,6 +22,12 @@ const userData = [
     email: 'd@d.d',
     password: 'password',
     passwordConfirmation: 'password'
+  },
+  {
+    name: 'Edward Really Longname',
+    email: 'edward_longname@verylong.longerstill',
+    password: 'password',
+    passwordConfirmation: 'password'
   }
 ]
 

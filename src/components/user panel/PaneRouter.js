@@ -60,18 +60,18 @@ const Routes = ({ children, getRouterProps }) => {
     return { Pane, paneName }
   }
 
-  function addPaneToHistory(history, paneName, additionalProps) {
+  function addPaneToHistory(history, paneName, addedProps) {
     if (!history.length || lastItem(history).name !== paneName) {
-      history.push({ name: paneName, additionalProps })
+      history.push({ name: paneName, addedProps })
     }
   }
 
   function makePane() {
     const { Pane, paneName } = routerSwitch(routerChildren, route)
 
-    addPaneToHistory(history, paneName, route.additonalProps)
+    addPaneToHistory(history, paneName, route.addedProps)
 
-    return () => React.cloneElement(Pane, { ...route.additonalProps })
+    return () => React.cloneElement(Pane, { ...route.addedProps })
   }
 
   const Pane = makePane()
@@ -82,7 +82,7 @@ const Routes = ({ children, getRouterProps }) => {
     >
       {history.length > 1 &&
         <i
-          className="fas fa-chevron-left"
+          className="fas fa-chevron-left fa-2x"
           onClick={goBack}
         />}
       <Pane />

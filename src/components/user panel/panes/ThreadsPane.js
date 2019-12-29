@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import moment from 'moment'
 
 import ThreadBox from './ThreadBox'
-import { Form, Field } from '../common/Form'
-import lastItem from '../../lib/lastItem'
+import { Form, Field } from '../../common/Form'
+import lastItem from '../../../lib/lastItem'
 
 const ThreadsPane = ({ threads, focusThread, setFocusThread }) => {
   const [ fields, setFields ] = useState({})
@@ -35,6 +35,7 @@ const ThreadsPane = ({ threads, focusThread, setFocusThread }) => {
   return (
     <>
       <Form
+        title="Threads"
         hasBox={true}
         fields={[ new Field('', 'text', 'Search', 'search') ]}
         fieldSetter={setFields}

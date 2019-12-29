@@ -1,7 +1,7 @@
 import React from 'react'
 
-import lastItem from '../../lib/lastItem'
-import formatDate from '../../lib/formatDate'
+import lastItem from '../../../lib/lastItem'
+import formatDate from '../../../lib/formatDate'
 
 const ThreadBox = ({ thread, isFocus, setFocusThread }) => {
   const lastMessage = lastItem(thread.messages)
