@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react'
+import React, { useReducer, useCallback, useEffect } from 'react'
 import io from 'socket.io-client'
 import axios from 'axios'
 import { toast } from 'react-toastify'
@@ -12,15 +12,10 @@ import userReducer from '../lib/userReducer'
 const Main = ({ history }) => {
   const [ user, amendUser ] = useReducer(userReducer, { threads: [] })
 
-  /*!!!
-  The hooks linter wants you to include ejectUser in the dependencies, but when you do
-  it tells you that it's going change on every re-render, and that you should use the
-  useCallback hook. Investigate.
-  */
-  function ejectUser() {
+  const ejectUser = useCallback(() => {
     history.push('/login')
     toast.error('You are not logged in or your session has expired.')
-  }
+  }, [ history ])
 
   useEffect(function initiateMain() {
 
@@ -71,7 +66,7 @@ const Main = ({ history }) => {
     const socket = intiateSocket()
 
     return () => socket.disconnect()
-  }, [ history ])
+  }, [ history, ejectUser ])
 
   useEffect(function ejectUnauthenticated() {
     if (!Auth.isAuthenticated()) {

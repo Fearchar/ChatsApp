@@ -25,15 +25,9 @@ const UserTopBar = ({ getRouterProps, imageUrl }) => {
           className="fas fa-user fa-2x"
           onClick={() => setRoute({ name: 'ContactsPane' })}
         />
-        {/* !!! Not yet being used */}
         <i
           className="fas fa-user-plus fa-2x"
           onClick={() => setRoute({ name: 'NewContactPane' })}
-        />
-        {/* !!! Delete below it's me temporary example */}
-        <i
-          className="fas fa-chevron-down fa-2x"
-          onClick={() => setRoute({ name: 'ThreadBox' })}
         />
       </div>
     </div>

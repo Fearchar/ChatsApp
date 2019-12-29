@@ -21,6 +21,7 @@ class Auth {
     localStorage.removeItem('token')
   }
 
+  //!!! This doesn't really check that someone is authenticated. To do that I would need to make a request.
   static isAuthenticated() {
     const payload = Auth.payload
     const dateNow = Math.round(Date.now() / 1000)
