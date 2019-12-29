@@ -27,7 +27,7 @@ const UserTopBar = ({ getRouterProps, imageUrl }) => {
         />
         <i
           className="fas fa-user-plus fa-2x"
-          onClick={() => setRoute({ name: 'NewContactPane' })}
+          onClick={() => setRoute({ name: 'AddContactPane' })}
         />
       </div>
     </div>

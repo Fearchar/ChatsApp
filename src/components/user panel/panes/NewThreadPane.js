@@ -46,16 +46,16 @@ const NewThreadPane = ({ contacts, getRouterProps }) => {
           new Field('', 'text', 'Search contacts', 'search')
         ]}
         fieldSetter={setFields}
-        fieldErros={errors}
+        fieldErrors={errors}
         onSubmit={createThread}
       >
-        {errors && errors.users && <p className="help is-danger">{errors.users}</p>}
 
         <h3 className="has-text-weight-bold">Group participants</h3>
         {!participants.length ?
           <p className="is-italic">Add contacts to group</p>
           :
           <p>{usersString(participants)}</p>}
+        {errors && errors.users && <p className="help is-danger">{errors.users}</p>}
         <br />
         <button
           className="button is-info"
