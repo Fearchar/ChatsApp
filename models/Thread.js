@@ -36,7 +36,7 @@ threadSchema.pre('validate', function checkUsers(next) {
   if (
     this.admins.length < 1 ||
     this.admins.length + this.participants.length < 2
-  ) this.invalidate('users', 'Threads require at least one admin and one participantA.')
+  ) this.invalidate('users', 'Threads require at least one admin and one participant.')
   next()
 })
 
