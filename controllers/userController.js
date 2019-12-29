@@ -65,7 +65,7 @@ function userThreadIndexRoute(req, res, next) {
         {
           path: 'contacts',
           modal: 'User',
-          select: 'name imgUrl'
+          select: 'name imageUrl'
         },
         {
           path: 'threads',

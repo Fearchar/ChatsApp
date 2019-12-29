@@ -26,7 +26,7 @@ const ContactsPane = ({ contacts, getRouterProps }) => {
               key={contact._id }
               contact={contact}
               onClickFunction={() => setRoute(
-                { name: 'ContactDetailPane', addedProps: { contactId: contact._id } }
+                { name: 'ContactDetailPane', extraProps: { contactId: contact._id } }
               )}
             />)}
       </div>

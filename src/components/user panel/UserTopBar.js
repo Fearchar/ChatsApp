@@ -1,15 +1,18 @@
 import React from 'react'
 
-const UserTopBar = ({ getRouterProps }) => {
+import UserThumbnail from './UserThumbnail'
+
+const UserTopBar = ({ getRouterProps, imageUrl }) => {
   const { setRoute, goHome } = getRouterProps()
 
   return (
     <div className="level card">
       <div className="level-left" />
       <div className="level-right top-bar">
-        <figure className="level-item image is-48x48 is-round">
-          <img className="is-rounded" src="https://static.thenounproject.com/png/538846-200.png" alt="Placeholder image" />
-        </figure>
+        <UserThumbnail
+          imageUrl={imageUrl}
+          scale={imageUrl ? '64x64' : '48x48'}
+        />
         <i
           className="fas fa-home fa-2x"
           onClick={goHome}
@@ -30,7 +33,7 @@ const UserTopBar = ({ getRouterProps }) => {
         {/* !!! Delete below it's me temporary example */}
         <i
           className="fas fa-chevron-down fa-2x"
-          onClick={() => setRoute({ name: 'ThreadBox', addedProps: { itsMe: 'itsme' } })}
+          onClick={() => setRoute({ name: 'ThreadBox', extraProps: { itsMe: 'itsme' } })}
         />
       </div>
     </div>

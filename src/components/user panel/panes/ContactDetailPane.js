@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
+import UserThumbnail from '../UserThumbnail'
+
 const ContactDetailPane = ({ contactId }) => {
   const [ contact, setContact ] = useState({})
-  const { _id, name, email, imgUrl } = contact
+  const { _id, name, email, imageUrl } = contact
 
   useEffect(() => {
     function fetchFullContact() {
@@ -19,15 +21,13 @@ const ContactDetailPane = ({ contactId }) => {
     :
     (
       <div className="box has-text-centered">
-        <figure className="image is-128x128">
-          {/* !!! Change stock photo for users without img */}
-          <img
-            src={imgUrl || 'https://static.thenounproject.com/png/538846-200.png'}
-            alt="User image"
-          />
-        </figure>
-        <h3>{name}</h3>
-        <h4>{email}</h4>
+        <UserThumbnail
+          imageUrl={imageUrl}
+          scale={'94x94'}
+          isInlineBlock={true}
+        />
+        <h3 className="title is-3 has-text-weight-bold">{name}</h3>
+        <h4 className="subtitle is-5">{email}</h4>
       </div>
     )
 }

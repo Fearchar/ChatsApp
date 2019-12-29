@@ -60,18 +60,18 @@ const Routes = ({ children, getRouterProps }) => {
     return { Pane, paneName }
   }
 
-  function addPaneToHistory(history, paneName, addedProps) {
+  function addPaneToHistory(history, paneName, extraProps) {
     if (!history.length || lastItem(history).name !== paneName) {
-      history.push({ name: paneName, addedProps })
+      history.push({ name: paneName, extraProps })
     }
   }
 
   function makePane() {
     const { Pane, paneName } = routerSwitch(routerChildren, route)
 
-    addPaneToHistory(history, paneName, route.addedProps)
+    addPaneToHistory(history, paneName, route.extraProps)
 
-    return () => React.cloneElement(Pane, { ...route.addedProps })
+    return () => React.cloneElement(Pane, { ...route.extraProps })
   }
 
   const Pane = makePane()
