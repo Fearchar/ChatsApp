@@ -5,7 +5,7 @@ import ThreadBox from './ThreadBox'
 import { Form, Field } from '../../common/Form'
 import lastItem from '../../../lib/lastItem'
 
-const ThreadsPane = ({ threads, focusThread, setFocusThread }) => {
+const ThreadsPane = ({ threads, focusThread, amendUser }) => {
   const [ fields, setFields ] = useState({})
 
   function lastMessageSort(array) {
@@ -47,7 +47,7 @@ const ThreadsPane = ({ threads, focusThread, setFocusThread }) => {
               key={thread._id}
               thread={thread}
               isFocus={thread === focusThread}
-              setFocusThread={setFocusThread}
+              onClick={thread => amendUser({ type: 'focusThread:set', focusThread: thread })}
             />)}
       </div>
     </>

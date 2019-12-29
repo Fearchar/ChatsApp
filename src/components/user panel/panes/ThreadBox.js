@@ -3,13 +3,13 @@ import React from 'react'
 import lastItem from '../../../lib/lastItem'
 import formatDate from '../../../lib/formatDate'
 
-const ThreadBox = ({ thread, isFocus, setFocusThread }) => {
+const ThreadBox = ({ thread, isFocus, onClick }) => {
   const lastMessage = lastItem(thread.messages)
 
   return (
     <div
       className={`box ${isFocus ? 'is-info' : ''}`}
-      onClick={() => setFocusThread(thread)}
+      onClick={() => onClick(thread)}
     >
       <h3 className="has-text-weight-bold">{thread.name}</h3>
       <p>

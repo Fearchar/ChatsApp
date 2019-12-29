@@ -7,14 +7,21 @@ function userReducer(user, action) {
 
   switch(action.type) {
     case 'user:index': {
-      
-      return action.user
+
+      return { ...action.user, focusThread: action.user.threads[0] }
     }
 
     case 'thread:new': {
-      threads.push(action.thread)
+      const thread = action.thread
 
-      return { ...user, threads }
+      threads.push(thread)
+
+      return { ...user, threads, focusThread: thread }
+    }
+
+    case 'focusThread:set': {
+
+      return { ...user, focusThread: action.focusThread }
     }
 
     // !!! Probably no use case

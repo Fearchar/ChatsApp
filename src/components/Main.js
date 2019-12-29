@@ -1,4 +1,4 @@
-import React, { useReducer, useState, useEffect } from 'react'
+import React, { useReducer, useEffect } from 'react'
 import io from 'socket.io-client'
 import axios from 'axios'
 import { toast } from 'react-toastify'
@@ -10,8 +10,7 @@ import { port } from '../../config/environment'
 import userReducer from '../lib/userReducer'
 
 const Main = ({ history }) => {
-  const [ user, dispatch ] = useReducer(userReducer, { threads: [] })
-  const [ focusThread, setFocusThread ] = useState(null)
+  const [ user, amendUser ] = useReducer(userReducer, { threads: [] })
 
   /*!!!
   The hooks linter wants you to include ejectUser in the dependencies, but when you do
@@ -33,8 +32,7 @@ const Main = ({ history }) => {
       axios.get('/api/userThreads', Auth.header)
         .then(res => {
           const user = res.data
-          dispatch({ type: 'user:index', user })
-          setFocusThread(user.threads[0])
+          amendUser({ type: 'user:index', user })
           joinThreads(user.threads, socket)
         })
         /* !!!
@@ -51,11 +49,11 @@ const Main = ({ history }) => {
 
     function addThread(thread, socket) {
       joinThreads([ thread ], socket)
-      dispatch({ type: 'thread:new', thread })
+      amendUser({ type: 'thread:new', thread })
     }
 
     function addMessage(threadId, message) {
-      dispatch({ type: 'message:new', threadId, message })
+      amendUser({ type: 'message:new', threadId, message })
     }
 
     function intiateSocket() {
@@ -87,12 +85,11 @@ const Main = ({ history }) => {
         <div className="column is-4 card">
           <UserPanel
             {...user}
-            focusThread={focusThread}
-            setFocusThread={setFocusThread}
+            amendUser={amendUser}
           />
         </div>
         <div className="column is-8 card">
-          <ThreadPanel thread={focusThread} />
+          <ThreadPanel thread={user.focusThread} />
         </div>
       </div>
     </main>

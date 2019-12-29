@@ -7,10 +7,11 @@ import Auth from '../../../lib/Auth'
 import usersString from '../../../lib/usersString'
 import filterContacts from '../../../lib/filterContacts'
 
-const NewThreadPane = ({ contacts }) => {
+const NewThreadPane = ({ contacts, getRouterProps }) => {
   const [ fields, setFields ] = useState({})
   const [ errors, setErrors ] = useState(null)
   const [ participants, setParticipants ] = useState([])
+  const { goHome } = getRouterProps()
 
   function toggleContactInclusion(contact) {
     const participantIndex = participants.findIndex(p => p.name === contact.name)
@@ -31,6 +32,7 @@ const NewThreadPane = ({ contacts }) => {
     const reqBody = { name, participants: participantIds }
 
     axios.post('/api/threads', reqBody, Auth.header)
+      .then(goHome)
       .catch(err => setErrors(err.response.data.errors))
   }
 
@@ -45,6 +47,7 @@ const NewThreadPane = ({ contacts }) => {
         ]}
         fieldSetter={setFields}
         fieldErros={errors}
+        onSubmit={createThread}
       >
         {errors && errors.users && <p className="help is-danger">{errors.users}</p>}
 
@@ -56,7 +59,6 @@ const NewThreadPane = ({ contacts }) => {
         <br />
         <button
           className="button is-info"
-          onSubmit={createThread}
         >Create group</button>
       </Form>
 

@@ -18,9 +18,10 @@ const threadHelper = (function () {
 
   function addThreadsToUsers(threads) {
     threads.forEach(thread => {
-      users.forEach(user => {
+      users.forEach(user => [ ...thread.admins, ...thread.participants ]
+        .some(threadUser => threadUser === user._id) &&
         user.threads.addToSet(thread)
-      })
+      )
     })
 
     return Promise.all([ ...users.map(user => user.save()) ])

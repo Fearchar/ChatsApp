@@ -33,7 +33,7 @@ const UserTopBar = ({ getRouterProps, imageUrl }) => {
         {/* !!! Delete below it's me temporary example */}
         <i
           className="fas fa-chevron-down fa-2x"
-          onClick={() => setRoute({ name: 'ThreadBox', extraProps: { itsMe: 'itsme' } })}
+          onClick={() => setRoute({ name: 'ThreadBox' })}
         />
       </div>
     </div>
