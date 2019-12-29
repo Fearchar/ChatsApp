@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import UserThumbnail from '../UserThumbnail'
 import ThreadBox from './ThreadBox'
+import Auth from '../../../lib/Auth'
 
 const ContactDetailPane = ({ contactId, threads, getRouterProps }) => {
   const [ contact, setContact ] = useState({})
@@ -11,7 +12,7 @@ const ContactDetailPane = ({ contactId, threads, getRouterProps }) => {
 
   useEffect(() => {
     function fetchFullContact() {
-      axios.get(`/api/users/${contactId}`)
+      axios.get(`/api/users/${contactId}`, Auth.header)
         .then(res => setContact(res.data))
     }
 
