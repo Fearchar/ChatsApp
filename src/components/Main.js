@@ -66,7 +66,7 @@ const Main = ({ history }) => {
     const socket = intiateSocket()
 
     return () => socket.disconnect()
-  }, [ history, ejectUser ])
+  }, [ ejectUser ])
 
   useEffect(function ejectUnauthenticated() {
     if (!Auth.isAuthenticated()) {
