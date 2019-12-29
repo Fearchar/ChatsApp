@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { Form, Field } from '../../common/Form'
 
 const AddContactPane = () => {
   const [ fields, setFields ] = useState(null)
-  
+
   return (
     <Form
       title="Add Contact"

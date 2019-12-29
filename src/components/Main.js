@@ -78,8 +78,12 @@ const Main = ({ history }) => {
     <main>
       <div className="columns is-variable is-0">
         <div className="column is-4 card">
+          {/* !!!
+            Could history prop here be managed with useContext as its final destination is UserTopBar?
+          */}
           <UserPanel
             {...user}
+            history={history}
             amendUser={amendUser}
           />
         </div>

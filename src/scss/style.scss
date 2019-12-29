@@ -35,6 +35,10 @@ body {
 
   i {
     cursor: pointer;
+
+    &.is-danger {
+      color: $danger;
+    }
   }
 
   #root main div.columns {
