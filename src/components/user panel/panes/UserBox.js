@@ -2,8 +2,8 @@ import React from 'react'
 
 import UserThumbnail from '../UserThumbnail'
 
-const ContactBox = ({
-  contact, contact: { name, imageUrl },
+const UserBox = ({
+  user, user: { name, imageUrl },
   isParticipant,
   onClickFunction
 }) => {
@@ -12,7 +12,7 @@ const ContactBox = ({
   return (
     <div
       className={`level box ${isParticipant ? 'is-info' : ''}`}
-      onClick={() => onClickFunction(contact)}
+      onClick={() => onClickFunction(user)}
     >
       <div className="level-left">
         <UserThumbnail imageUrl={imageUrl} />
@@ -22,4 +22,4 @@ const ContactBox = ({
   )
 }
 
-export default ContactBox
+export default UserBox

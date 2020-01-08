@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import Icon from '../common/Icon'
 import lastItem from '../../lib/lastItem'
 
 const history = []
@@ -81,8 +82,8 @@ const Routes = ({ children, getRouterProps }) => {
       className="box"
     >
       {history.length > 1 &&
-        <i
-          className="fas fa-chevron-left fa-2x"
+        <Icon
+          name="left-arrow"
           onClick={goBack}
         />}
       <Pane />

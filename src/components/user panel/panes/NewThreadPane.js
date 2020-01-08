@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import axios from 'axios'
 
 import { Form, Field } from '../../common/Form'
-import ContactBox from './ContactBox'
+import UserBox from './UserBox'
 import Auth from '../../../lib/Auth'
 import usersString from '../../../lib/usersString'
-import filterContacts from '../../../lib/filterContacts'
+import filterUsers from '../../../lib/filterUsers'
 
 const NewThreadPane = ({ contacts, getRouterProps }) => {
   const [ fields, setFields ] = useState({})
@@ -63,12 +63,12 @@ const NewThreadPane = ({ contacts, getRouterProps }) => {
       </Form>
 
       <div className="card scrolls">
-        {contacts && filterContacts(contacts, fields.search)
-          .map(contact =>
-            <ContactBox
-              key={contact._id}
-              contact={contact}
-              isParticipant={participants.includes(contact)}
+        {contacts && filterUsers(contacts, fields.search)
+          .map(user =>
+            <UserBox
+              key={user._id}
+              user={user}
+              isParticipant={participants.includes(user)}
               onClickFunction={toggleContactInclusion}
             />)}
       </div>

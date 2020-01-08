@@ -2,6 +2,7 @@ import React from 'react'
 import { toast } from 'react-toastify'
 
 import UserThumbnail from './UserThumbnail'
+import Icon from '../common/Icon'
 import Auth from '../../lib/Auth'
 
 const UserTopBar = ({ getRouterProps, imageUrl, history }) => {
@@ -17,28 +18,30 @@ const UserTopBar = ({ getRouterProps, imageUrl, history }) => {
     <div className="level card">
       <div className="level-left" />
       <div className="level-right top-bar">
+        {/*!!! imageUrl sizing doesn't work for tall images*/}
         <UserThumbnail
           imageUrl={imageUrl}
           scale={imageUrl ? '64x64' : '48x48'}
         />
-        <i
-          className="fas fa-home fa-2x"
+        <Icon
+          name="home"
           onClick={goHome}
         />
-        <i
-          className="far fa-edit fa-2x"
+        <Icon
+          name="edit"
           onClick={() => setRoute({ name: 'NewThreadPane' })}
         />
-        <i
-          className="fas fa-user fa-2x"
+        <Icon
+          name="users"
           onClick={() => setRoute({ name: 'ContactsPane' })}
         />
-        <i
-          className="fas fa-user-plus fa-2x"
+        <Icon
+          name="user-plus"
           onClick={() => setRoute({ name: 'AddContactPane' })}
         />
-        <i
-          className="fas fa-user-times fa-2x is-danger"
+        <Icon
+          name="user-times"
+          className="is-danger"
           onClick={logout}
         />
       </div>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
 import { Form, Field } from '../../common/Form'
-import ContactBox from './ContactBox'
-import filterContacts from '../../../lib/filterContacts'
+import UserBox from './UserBox'
+import filterUsers from '../../../lib/filterUsers'
 
 const ContactsPane = ({ contacts, getRouterProps }) => {
   const [ fields, setFields ] = useState({})
@@ -20,11 +20,11 @@ const ContactsPane = ({ contacts, getRouterProps }) => {
         fieldSetter={setFields}
       />
       <div className="card scrolls">
-        {filterContacts(contacts, fields.search)
+        {filterUsers(contacts, fields.search)
           .map(contact =>
-            <ContactBox
+            <UserBox
               key={contact._id }
-              contact={contact}
+              user={contact}
               onClickFunction={() => setRoute(
                 { name: 'ContactDetailPane', extraProps: { contactId: contact._id } }
               )}
