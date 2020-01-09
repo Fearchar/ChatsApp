@@ -8,7 +8,7 @@ import AddContactPane from './panes/AddContactPane'
 import ContactDetailPane from './panes/ContactDetailPane'
 import ThreadsPane from './panes/ThreadsPane'
 
-const UserPanel = ({ imageUrl, threads, contacts, focusThread, history, amendUser }) =>
+const UserPanel = ({ user: { _id, imageUrl, threads, contacts }, focusThread, history, amendUser  }) =>
   <PaneRouter>
     <UserTopBar
       imageUrl={imageUrl}
@@ -20,11 +20,16 @@ const UserPanel = ({ imageUrl, threads, contacts, focusThread, history, amendUse
       <NewThreadPane
         contacts={contacts}
       />
-      <ContactsPane contacts={contacts} />
+      <ContactsPane
+        contacts={contacts}
+      />
       <ContactDetailPane
         threads={threads}
       />
-      <AddContactPane />
+      <AddContactPane
+        userId={_id}
+        contacts={contacts}
+      />
       <ThreadsPane
         threads={threads}
         focusThread={focusThread}

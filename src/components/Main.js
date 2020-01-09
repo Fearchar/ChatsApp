@@ -51,6 +51,10 @@ const Main = ({ history }) => {
       amendUser({ type: 'message:new', threadId, message })
     }
 
+    function addContact(contact) {
+      amendUser({ type: 'contact:new', contact })
+    }
+
     function intiateSocket() {
       const socket = io.connect(`http://localhost:${port}`)
 
@@ -59,6 +63,7 @@ const Main = ({ history }) => {
       // socket.on('thread:leave', leaveThread)
       socket.on('thread:new', thread => addThread(thread, socket))
       socket.on('message:new', addMessage)
+      socket.on('contact:new', addContact)
 
       return socket
     }
@@ -82,7 +87,7 @@ const Main = ({ history }) => {
             Could history prop here be managed with useContext as its final destination is UserTopBar?
           */}
           <UserPanel
-            {...user}
+            user={user}
             history={history}
             amendUser={amendUser}
           />

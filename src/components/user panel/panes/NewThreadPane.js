@@ -68,7 +68,7 @@ const NewThreadPane = ({ contacts, getRouterProps }) => {
             <UserBox
               key={user._id}
               user={user}
-              isParticipant={participants.includes(user)}
+              highlight={participants.includes(user)}
               onClickFunction={toggleContactInclusion}
             />)}
       </div>

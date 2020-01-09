@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 import AuthPage from './AuthPage'
 import { Form, Field } from '../common/Form'
@@ -10,7 +11,10 @@ const Register = ({ history }) => {
 
   function attemptRegister() {
     axios.post('/api/register', fieldValues)
-      .then(() => history.push('/login'))
+      .then(() => {
+        toast.success('Registration successful')
+        history.push('/login')
+      })
       .catch(err => setFieldErrors(err.response.data.errors))
   }
 

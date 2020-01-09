@@ -42,6 +42,10 @@ body {
     &.is-danger {
       color: $danger;
     }
+
+    &:hover {
+      color: $info;
+    }
   }
 
   #root main div.columns {

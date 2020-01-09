@@ -11,6 +11,7 @@ router.route('/users/:id')
   .get(secureRoute, userController.show)
   .put(secureRoute, userController.update)
   .delete(secureRoute, userController.delete)
+router.put('/userAddContact', secureRoute, userController.addContact)
 router.get('/userThreads', secureRoute, userController.userThreadIndex)
 
 router.post('/threads', secureRoute, threadController.create)

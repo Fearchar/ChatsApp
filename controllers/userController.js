@@ -35,13 +35,28 @@ function indexRoute(req, res, next) {
     .catch(next)
 }
 
+//!!! Should be req.currentUser
 function updateRoute(req, res, next) {
   User.findById(req.params.id)
     .then(user => {
       if (!user) return res.sendStatus(404)
       user.set(req.body)
       return user.save()
-        .then(user => res.json(user))
+    })
+    .then(user => res.json(user))
+    .catch(next)
+}
+
+function addContactRoute(req, res, next) {
+  let contact = null
+
+  User.findById(req.body.contactId)
+    .then(user => {
+      if (!user) return res.sendStatus(404)
+      contact = user
+      req.currentUser.contacts.addToSet(contact)
+      return req.currentUser.save()
+        .then(() => res.statusEmit('contact:new', null, contact))
     })
     .catch(next)
 }
@@ -99,6 +114,7 @@ module.exports = {
   show: showRoute,
   index: indexRoute,
   update: updateRoute,
+  addContact: addContactRoute,
   delete: deleteRoute,
   userThreadIndex: userThreadIndexRoute
 }

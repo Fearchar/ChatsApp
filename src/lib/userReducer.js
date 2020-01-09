@@ -41,6 +41,12 @@ function userReducer(user, action) {
       return { ...user, threads }
     }
 
+    case 'contact:new': {
+      const contacts = [ ...user.contacts, action.contact ]
+
+      return { ...user, contacts }
+    }
+
     default: {
       throw new Error(`Unrecognised case in threadsReducer: "${action.type}"`)
     }

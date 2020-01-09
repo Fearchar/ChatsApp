@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Icon from '../common/Icon'
 import lastItem from '../../lib/lastItem'
 
+//!!! Needs to be brought into the component
 const history = []
 
 const PaneRouter = ({ children }) => {
@@ -18,6 +19,11 @@ const PaneRouter = ({ children }) => {
     setRoute({ name: null })
   }
 
+  function go(route) {
+    history.push(route)
+    setRoute(route)
+  }
+
   //!!! Make useRoute custom hook which also handels history?
   function getRouterProps(children) {
     let routerChildren = children ? React.Children.toArray(children) : null
@@ -30,7 +36,8 @@ const PaneRouter = ({ children }) => {
       route,
       setRoute,
       goBack,
-      goHome
+      goHome,
+      go
     }
   }
 
