@@ -12,6 +12,7 @@ const ContactsPane = ({ contacts, getRouterProps }) => {
     <>
       <Form
         title="Contacts"
+        className="has-background-grey-lighter"
         hasBox={true}
         buttonName="Add contact"
         fields={[
@@ -19,7 +20,7 @@ const ContactsPane = ({ contacts, getRouterProps }) => {
         ]}
         fieldSetter={setFields}
       />
-      <div className="card scrolls">
+      <div className="box scrolls medium-scroller has-background-grey-lighter">
         {filterUsers(contacts, fields.search)
           .map(contact =>
             <UserBox

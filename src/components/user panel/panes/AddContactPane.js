@@ -49,6 +49,7 @@ const AddContactPane = ({ userId, contacts, getRouterProps }) => {
     <>
       <Form
         title="Add Contact"
+        className="has-background-grey-lighter"
         hasBox={true}
         fields={[ new Field('', 'text', 'Search', 'search') ]}
         fieldSetter={setFields}
@@ -68,15 +69,18 @@ const AddContactPane = ({ userId, contacts, getRouterProps }) => {
 
       </Form>
 
-      <div className="card scrolls">
-        {filterUsers(users || [], fields.search, userId)
-          .map(user =>
-            <UserBox
-              key={user._id }
-              user={user}
-              highlight={user === focusUser}
-              onClickFunction={() => toggleFocusUser(user)}
-            />)}
+      <div className="box scrolls medium-big-scroller has-background-grey-lighter">
+        {!users ?
+          <p>Loading ...</p>
+          :
+          filterUsers(users, fields.search, userId)
+            .map(user =>
+              <UserBox
+                key={user._id }
+                user={user}
+                highlight={user === focusUser}
+                onClickFunction={() => toggleFocusUser(user)}
+              />)}
       </div>
     </>
   )

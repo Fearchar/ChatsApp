@@ -15,7 +15,7 @@ const UserTopBar = ({ getRouterProps, imageUrl, history }) => {
   }
 
   return (
-    <div className="level card">
+    <div className="level card top-bar has-background-grey-lighter">
       <div className="level-left" />
       <div className="level-right top-bar">
         {/*!!! imageUrl sizing doesn't work for tall images*/}

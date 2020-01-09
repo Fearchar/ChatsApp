@@ -13,6 +13,7 @@ class Field {
 
 const Form = ({
   title,
+  className,
   hasBox,
   buttonName,
   fields,
@@ -27,7 +28,7 @@ const Form = ({
 
   return (
     <form
-      className={`${hasBox ? 'box' : ''}`}
+      className={`${hasBox ? 'box ' + className : className}`}
       onSubmit={e => {
         e.preventDefault()
         onSubmit(e)

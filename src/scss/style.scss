@@ -14,51 +14,84 @@ body {
 
   #root, main {
     height: 100%;
-  }
 
-  div.box.is-primary, div.box.is-info {
-    color: $text-invert;
-
-    &.is-primary {
-      background-color: $primary;
-    }
-
-    &.is-info {
-      background-color: $info;
-    }
-
-  }
-
-  textarea.textarea {
-    resize: none;
-  }
-
-// !!! Make sure that this scales with other elements
-  svg {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-
-    &.is-danger {
-      color: $danger;
-    }
-
-    &:hover {
-      color: $info;
-    }
   }
 
   #root main div.columns {
     height: 100%;
 
+    div.box.is-primary, div.box.is-info {
+      color: $text-invert;
+
+      &.is-primary {
+        background-color: $primary;
+      }
+
+      &.is-info {
+        background-color: $info;
+      }
+    }
+
+    div.box, input.input, textarea {
+      background-color: $white-ter;
+    }
+
+    textarea.textarea {
+      resize: none;
+    }
+
+  // !!! Make sure that this scales with other elements
+    svg {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+
+      //!!!
+      // &.fa-angle-left {
+      //   height: 5vh;
+      // }
+
+      &.is-danger {
+        color: $danger;
+      }
+
+      &.is-white-ter {
+        color: $white-ter;
+      }
+
+      &:hover:not(.is-white-ter) {
+        color: $info;
+      }
+    }
+
     div.top-bar {
       height: $top-bar-height;
       margin: 0;
     }
+
     /// !!! Can the height be set on each column and then the scroll panes seperately?
     div.scrolls {
-      height: (79vh - $top-bar-height);
       overflow-y: scroll;
+
+      &.bigger-scroller {
+        height: (79vh - $top-bar-height);
+      }
+
+      &.big-scroller {
+        height: (68.5vh - $top-bar-height);
+      }
+
+      &.medium-big-scroller {
+        height: (53vh - $top-bar-height);
+      }
+
+      &.medium-scroller {
+        height: (62vh - $top-bar-height);
+      }
+
+      &.small-scroller {
+        height: (46.5vh - $top-bar-height);
+      }
     }
   }
 }

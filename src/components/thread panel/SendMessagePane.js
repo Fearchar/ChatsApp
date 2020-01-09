@@ -36,7 +36,7 @@ const SendMessagePane = ({ threadId }) => {
   */
   return (
     <form
-      className="level card"
+      className="level card has-background-grey-lighter"
       onSubmit={sendMessage}
     >
       <div className="column is-10">
@@ -56,7 +56,7 @@ const SendMessagePane = ({ threadId }) => {
         }
       </div>
       <div className="column is-2 has-text-centered">
-        <button className="button">send</button>
+        <button className="button is-info">send</button>
       </div>
     </form>
   )

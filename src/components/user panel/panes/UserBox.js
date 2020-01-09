@@ -7,7 +7,7 @@ const UserBox = ({
   highlight,
   onClickFunction
 }) => {
-  const shortName = name.length <= 20 ? name : `${name.slice(0, 20)} ...`
+  const shortName = name.length <= 20 ? name : `${name.slice(0, 15)} ...`
 
   return (
     <div

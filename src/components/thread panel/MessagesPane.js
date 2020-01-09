@@ -9,7 +9,7 @@ const MessagesPane = ({ messages }) => {
   })
 
   return (
-    <div className="scrolls">
+    <div className="scrolls bigger-scroller has-background-white-ter">
       {messages && messages.map(message =>
         <Message
           key={message._id}

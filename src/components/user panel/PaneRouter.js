@@ -85,14 +85,18 @@ const Routes = ({ children, getRouterProps }) => {
   const Pane = makePane()
 
   return (
-    <div
-      className="box"
-    >
-      {history.length > 1 &&
+    <div className="box">
+      {history.length > 1 ?
         <Icon
           name="left-arrow"
           onClick={goBack}
-        />}
+        />
+        :
+        <Icon
+          name="left-arrow"
+          className="is-white-ter"
+        />
+      }
       <Pane />
     </div>
   )

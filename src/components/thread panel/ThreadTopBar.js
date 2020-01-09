@@ -7,17 +7,10 @@ const ThreadTopBar = ({ _id, name, admins, participants }) => {
   const usersStr = threadUsers && usersString(threadUsers)
 
   return (
-    <div className="level card top-bar">
+    <div className="level card top-bar has-background-grey-lighter">
       {_id &&
         <div className="level-left">
-          <figure className="level-item image is-48x48 is-round">
-            <img
-              className="is-rounded"
-              src="https://www.placecage.com/c/460/300"
-              alt="Placeholder image"
-            />
-          </figure>
-          <h2 className="level-item has-text-weight-bold">{name}</h2>
+          <h2 className="level-item is-size-4 has-text-weight-bold">{name}</h2>
           <p className="level-item">{usersStr}</p>
         </div>}
     </div>
