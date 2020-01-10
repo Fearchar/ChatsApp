@@ -40,7 +40,6 @@ const NewThreadPane = ({ contacts, getRouterProps }) => {
     <>
       <Form
         title="New Thread"
-        className="has-background-grey-lighter"
         hasBox={true}
         fields={[
           new Field('', 'text', 'Enter name', 'name'),
@@ -60,7 +59,7 @@ const NewThreadPane = ({ contacts, getRouterProps }) => {
         <br />
         <button
           className="button is-info"
-        >Create group</button>
+        >Create thread</button>
       </Form>
 
       <div className="box small-scroller scrolls has-background-grey-lighter">

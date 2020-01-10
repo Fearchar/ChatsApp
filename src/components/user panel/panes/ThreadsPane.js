@@ -36,7 +36,6 @@ const ThreadsPane = ({ threads, focusThread, amendUser }) => {
     <>
       <Form
         title="Threads"
-        className="has-background-grey-lighter"
         hasBox={true}
         fields={[ new Field('', 'text', 'Search', 'search') ]}
         fieldSetter={setFields}

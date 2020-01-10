@@ -28,7 +28,7 @@ const Form = ({
 
   return (
     <form
-      className={`${hasBox ? 'box ' + className : className}`}
+      className={`${hasBox ? 'box ' : ''} ${className} has-background-grey-lighter`}
       onSubmit={e => {
         e.preventDefault()
         onSubmit(e)

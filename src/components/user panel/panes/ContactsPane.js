@@ -12,7 +12,6 @@ const ContactsPane = ({ contacts, getRouterProps }) => {
     <>
       <Form
         title="Contacts"
-        className="has-background-grey-lighter"
         hasBox={true}
         buttonName="Add contact"
         fields={[

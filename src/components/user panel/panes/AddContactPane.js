@@ -7,8 +7,7 @@ import { Form, Field } from '../../common/Form'
 import Auth from '../../../lib/Auth'
 import filterUsers from '../../../lib/filterUsers'
 
-const AddContactPane = ({ userId, contacts, getRouterProps }) => {
-  const { go } = getRouterProps()
+const AddContactPane = ({ userId, contacts }) => {
   const [ fields, setFields ] = useState({})
   const [ users, setUsers ] = useState(null)
   const [ focusUser, setFocusUser ] = useState(null)
@@ -33,23 +32,24 @@ const AddContactPane = ({ userId, contacts, getRouterProps }) => {
 
     if (focusUser && contactIds.includes(focusUser._id)) {
       toast.error(`You have already added ${focusUser.name} as a contact.`)
-      go({ name: 'ContactsPane' })
       return
     } else if (!focusUser) {
       return
     }
 
     axios.put('/api/userAddContact', { contactId: focusUser._id }, Auth.header)
-      .then(() => toast.success(`${focusUser.name} has been added to your contacts`))
+      .then(() => {
+        toast.success(`${focusUser.name} has been added to your contacts`)
+      })
       // !!! What to do with err?
       .catch(err => console.log(err))
+
   }
 
   return (
     <>
       <Form
         title="Add Contact"
-        className="has-background-grey-lighter"
         hasBox={true}
         fields={[ new Field('', 'text', 'Search', 'search') ]}
         fieldSetter={setFields}

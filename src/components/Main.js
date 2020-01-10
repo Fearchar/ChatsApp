@@ -92,7 +92,7 @@ const Main = ({ history }) => {
             amendUser={amendUser}
           />
         </div>
-        <div className="column is-8 card">
+        <div className={`column is-8 card ${!user.focusThread ? 'blank' : ''}`}>
           <ThreadPanel thread={user.focusThread} />
         </div>
       </div>

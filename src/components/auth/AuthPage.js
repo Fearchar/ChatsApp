@@ -14,7 +14,7 @@ const AuthPage = ({ children }) =>
         </div>
       </div>
     </section>
-    <section className="section">
+    <section className="section has-background-white-ter">
       <div className="columns is-desktop is-centered">
         <div className="column is-half">
           {children}

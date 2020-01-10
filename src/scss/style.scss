@@ -3,8 +3,9 @@
 @import "../../node_modules/react-toastify/scss/main.scss";
 
 //!!! Are these form hieghts really representative of the forms heights?
+//!!! Need to replace SOMETHING
 $full-h: 100vh;
-$top-bar-h: 55px;
+$top-bar-h: 80px;
 $send-message-pane-h: 168px;
 $message-pane-h: calc(#{$full-h} - #{$send-message-pane-h} - #{$top-bar-h});
 $pane-router-SOMETHING: calc(#{$full-h} - #{$top-bar-h} - 110px);
@@ -16,6 +17,7 @@ $contacts-form: 192px;
 $contacts-scoller-h: calc(#{$pane-router-SOMETHING} - #{$contacts-form});
 $add-contact-form: 264px;
 $add-contact-scoller-h: calc(#{$pane-router-SOMETHING} - #{$add-contact-form});
+$blank-message-pane-h: calc(#{$full-h} + 12px);
 
 * {
   box-sizing: border-box;
@@ -24,6 +26,7 @@ $add-contact-scoller-h: calc(#{$pane-router-SOMETHING} - #{$add-contact-form});
 body {
   height: $full-h;
   margin: 0;
+  background-color: $white-ter;
 
   #root, main {
     height: 100%;
@@ -32,6 +35,10 @@ body {
 
   #root main div.columns {
     height: 100%;
+
+    div.column.blank {
+      height: $blank-message-pane-h;
+    }
 
     div.box.is-primary, div.box.is-info {
       color: $text-invert;
@@ -49,8 +56,13 @@ body {
       background-color: $white-ter;
     }
 
+    div.level-left {
+      margin-left: 10px;
+    }
+
     textarea.textarea {
       resize: none;
+      margin-left: 10px;
     }
 
   // !!! Make sure that this scales with other elements
@@ -80,6 +92,11 @@ body {
     div.top-bar {
       height: $top-bar-h;
       margin: 0;
+
+      img {
+        max-height: $top-bar-h - 5px;
+        border-radius: 50%;
+      }
     }
 
     /// !!! Can the height be set on each column and then the scroll panes seperately?

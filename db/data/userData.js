@@ -28,9 +28,16 @@ const userData = [
     passwordConfirmation: 'password'
   },
   {
-    name: 'Edward Really Longname',
-    email: 'edward_longname@verylong.longerstill',
-    imageUrl: 'https://www.lushusa.com/dw/image/v2/BDMQ_PRD/on/demandware.static/-/Sites-lushcosmetics-export/default/dwd851e128/images/slotBanner/Mick_coalfacehero4.jpg?sw=700&sh=456&sm=cut',
+    name: 'Ella\'s Got A Really Longname',
+    email: 'ella_got_a_longname@verylong.longerstill',
+    imageUrl: 'https://miro.medium.com/max/2560/1*gBQxShAkxBp_YPb14CN0Nw.jpeg',
+    password: 'password',
+    passwordConfirmation: 'password'
+  },
+  {
+    name: 'Francis',
+    email: 'f@f.f',
+    imageUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
     password: 'password',
     passwordConfirmation: 'password'
   }
