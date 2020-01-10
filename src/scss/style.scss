@@ -2,14 +2,27 @@
 @import "../../node_modules/bulma/bulma.sass";
 @import "../../node_modules/react-toastify/scss/main.scss";
 
-$top-bar-height: 7vh;
+//!!! Are these form hieghts really representative of the forms heights?
+$full-h: 100vh;
+$top-bar-h: 55px;
+$send-message-pane-h: 168px;
+$message-pane-h: calc(#{$full-h} - #{$send-message-pane-h} - #{$top-bar-h});
+$pane-router-SOMETHING: calc(#{$full-h} - #{$top-bar-h} - 110px);
+$threads-form-h: 140px;
+$threads-scoller-h: calc(#{$pane-router-SOMETHING} - #{$threads-form-h});
+$new-threads-form-h: 316px;
+$new-threads-scoller-h: calc(#{$pane-router-SOMETHING} - #{$new-threads-form-h});
+$contacts-form: 192px;
+$contacts-scoller-h: calc(#{$pane-router-SOMETHING} - #{$contacts-form});
+$add-contact-form: 264px;
+$add-contact-scoller-h: calc(#{$pane-router-SOMETHING} - #{$add-contact-form});
 
 * {
   box-sizing: border-box;
 }
 
 body {
-  height: 101vh;
+  height: $full-h;
   margin: 0;
 
   #root, main {
@@ -65,7 +78,7 @@ body {
     }
 
     div.top-bar {
-      height: $top-bar-height;
+      height: $top-bar-h;
       margin: 0;
     }
 
@@ -74,23 +87,23 @@ body {
       overflow-y: scroll;
 
       &.bigger-scroller {
-        height: (79vh - $top-bar-height);
+        height: $message-pane-h;
       }
 
       &.big-scroller {
-        height: (68.5vh - $top-bar-height);
+        height: $threads-scoller-h;
       }
 
       &.medium-big-scroller {
-        height: (53vh - $top-bar-height);
+        height: $add-contact-scoller-h;
       }
 
       &.medium-scroller {
-        height: (62vh - $top-bar-height);
+        height: $contacts-scoller-h;
       }
 
       &.small-scroller {
-        height: (46.5vh - $top-bar-height);
+        height: $new-threads-scoller-h;
       }
     }
   }
